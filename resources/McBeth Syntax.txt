@@ -1,0 +1,37 @@
+Terminal Symbols
+================
+
+number	string	<-	+	*	.
+
+
+Nonterminal Symbols
+===================
+
+Program
+Command
+Expression
+V-Name
+Declaration
+Type-Denoter
+Operator
+Integer-Literal
+
+
+Production Rules
+================
+
+Program				:=		Single-Command
+Command				:=		Single-Command | Command . Single-Command
+Single-Command		:=		V-Name <- Expression 
+Expression			:=		Primary-Expression | Expression Operator Primary-Expression
+Primary-Expression	:=		Integer-Literal | V-Name
+V-Name				:=		Identifier
+Declaration			:=		Single-Declaration | Declaration . Single-Declaration
+Single-Declaration	:=		Type-Denoter Identifier <- Expression
+Type-Denoter		:=		Identifier
+Operator			:=		+ | * | <-
+Identifier			:=		Letter (Letter | Digit)*
+Letter				:=		a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z |
+							A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z
+Digit				:=		0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9  
+Separator			:=		.
