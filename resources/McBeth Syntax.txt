@@ -21,12 +21,12 @@ Production Rules
 ================
 
 Program				:=		Single-Command
-Command				:=		Single-Command | Command . Single-Command
-Single-Command		:=		V-Name <- Expression 
-Expression			:=		Primary-Expression | Expression Operator Primary-Expression
-Primary-Expression	:=		Integer-Literal | V-Name
+Command				:=		Single-Command (. Single-Command)*
 V-Name				:=		Identifier
-Declaration			:=		Single-Declaration | Declaration . Single-Declaration
+Single-Command		:=		Identifier <- Expression 
+Expression			:=		Primary-Expression (Operator Primary-Expression)*
+Primary-Expression	:=		Integer-Literal | Identifier | Operator Primary-Expression
+Declaration			:=		Single-Declaration (. Single-Declaration)*
 Single-Declaration	:=		Type-Denoter Identifier <- Expression
 Type-Denoter		:=		Identifier
 Operator			:=		+ | * | <-
