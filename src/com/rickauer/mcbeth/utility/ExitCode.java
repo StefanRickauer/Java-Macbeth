@@ -1,5 +1,5 @@
 package com.rickauer.mcbeth.utility;
-
+// TODO check necessity of this enum and delete if not needed
 public enum ExitCode {
 	SUCCESS 				(0),
 	INVALID_CMD_LINE_ARG 	(64),
