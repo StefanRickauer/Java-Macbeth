@@ -1,7 +1,7 @@
 Terminal Symbols
 ================
 
-number	string	<-	+	*	.
+number  string  show  <-  +  *  .  [  ]
 
 
 Nonterminal Symbols
@@ -23,9 +23,9 @@ Production Rules
 Program				:=		Single-Command
 Command				:=		Single-Command (. Single-Command)*
 V-Name				:=		Identifier
-Single-Command		:=		Identifier <- Expression 
+Single-Command		:=		Identifier (<- Expression | [Expression]) 
 Expression			:=		Primary-Expression (Operator Primary-Expression)*
-Primary-Expression	:=		Integer-Literal | Identifier | Operator Primary-Expression
+Primary-Expression	:=		Integer-Literal | Identifier | Operator Primary-Expression | [Expression]
 Declaration			:=		Single-Declaration (. Single-Declaration)*
 Single-Declaration	:=		Type-Denoter Identifier <- Expression
 Type-Denoter		:=		Identifier
