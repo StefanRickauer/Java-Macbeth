@@ -7,7 +7,7 @@ public class Token {
 	public Token(int kind, String spelling) {
 		
 		if (kind == Token.IDENTIFIER) {
-			int currentKind = firstReservedWord;
+			int currentKind = firstKeyword;
 			boolean searching = true;
 			
 			while (searching) {
@@ -16,7 +16,7 @@ public class Token {
 					this.kind = currentKind;
 					searching = false;
 				}
-				else if (comparison > 0 || currentKind == lastReservedWord) {
+				else if (comparison > 0 || currentKind == lastKeyword) {
 					this.kind = Token.IDENTIFIER;
 					searching = false;
 				}
@@ -80,5 +80,5 @@ public class Token {
 			"" 
 	}; 
 	
-	private static final int firstReservedWord = Token.NUMBER, lastReservedWord = Token.STRING;
+	private static final int firstKeyword = Token.NUMBER, lastKeyword = Token.STRING;
 }
