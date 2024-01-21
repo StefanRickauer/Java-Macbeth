@@ -1,24 +1,84 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
 public class Token {
-	public byte kind;
+	public int kind;
 	public String spelling;
 	
-	public Token(byte kind, String spelling) {
-		this.kind = kind;
-		this.spelling = spelling;
+	public Token(int kind, String spelling) {
 		
-		if (kind == IDENTIFIER) {
-			for (int i = NUMBER; i <= SHOW; i++ ) {
-				if (spelling.equals(spellings[i])) {
-					this.kind = (byte)i;
-					break;
+		if (kind == Token.IDENTIFIER) {
+			int currentKind = firstReservedWord;
+			boolean searching = true;
+			
+			while (searching) {
+				int comparison = tokenTable[currentKind].compareTo(spelling);
+				if (comparison == 0) {
+					this.kind = currentKind;
+					searching = false;
+				}
+				else if (comparison > 0 || currentKind == lastReservedWord) {
+					this.kind = Token.IDENTIFIER;
+					searching = false;
+				}
+				else {
+					currentKind++;
 				}
 			}
+		} 
+		else {
+			this.kind = kind;
 		}
+		
+		this.spelling = spelling;
 	}
 	
-	public final static byte IDENTIFIER = 0, INTLITERAL = 1, OPERATOR = 2, NUMBER = 3, STRING = 4, SHOW = 5, DOT = 6, BECOMES = 7, LBRACKET = 8, RBRACKET = 9, EOT = 10;
+	public static String spell(int kind) {
+		return tokenTable[kind];
+	}
 	
-	private final static String[] spellings = { "<identifier>", "<integer-literal>", "<operator>", "number", "string", "show", ".", "<-", "[", "]", "<eot>" }; 
+	@Override
+	public String toString() {
+		return "Kind=" + kind + ", spelling=" + spelling;
+	}
+	
+	public static final int
+			// literals, identifier, operator
+			CHARLITERAL =  0,
+			INTLITERAL 	=  1,
+			IDENTIFIER 	=  2,  
+			OPERATOR 	=  3, 
+		
+			// keywords (required to be in alphabetical order)
+			NUMBER 		=  4, 
+			SHOW 		=  5, 
+			STRING 		=  6, 
+		
+			// punctuation
+			BECOMES 	=  7,
+			DOT 		=  8,  
+		
+			// bracket
+			LBRACKET 	=  9, 
+			RBRACKET 	= 10,
+		
+			// special token
+			EOT 		= 11,
+			ERROR 		= 12;
+	
+	private static final String[] tokenTable = new String[] { 
+			"<char>",
+			"<int>",
+			"<identifier>", 
+			"<operator>", 
+			"number", 
+			"show", 
+			"string",
+			"<-", 
+			".", 
+			"[", 
+			"]", 
+			"" 
+	}; 
+	
+	private static final int firstReservedWord = Token.NUMBER, lastReservedWord = Token.STRING;
 }

@@ -7,15 +7,6 @@ public class Scanner {
 	private byte currentKind;
 	private StringBuffer currentSpelling;
 	
-	private void take(char exprectedChar) {
-		if (currentChar == exprectedChar) {
-			currentSpelling.append(currentChar);
-			//currentChar =  next source character ;
-		} else {
-			// report lexical error
-		}
-	}
-	
 	private void takeIt() {
 		currentSpelling.append(currentChar);
 		//currentChar = next source character;
