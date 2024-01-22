@@ -1,49 +1,116 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
 public class Scanner {
-	private char currentChar;		// first source character
 	
-	// Kind and spelling of the current token
-	private byte currentKind;
+	private SourceFile sourceFile;
+	
+	private char currentChar;		
 	private StringBuffer currentSpelling;
+	private boolean isScanningToken;
 	
-	private void takeIt() {
-		currentSpelling.append(currentChar);
-		//currentChar = next source character;
+	private boolean isLetter(char c) {
+		return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 	}
 	
 	private boolean isDigit(char c) {
-		// returns true if character is digit
-		return false; 	// dummy value
+		return (c >= '0' && c <= '9');
 	}
 	
-	private boolean isLetter(char c) {
-		// returns true if character is letter
-		return false; 	// dummy value
+	private boolean isOperator(char c) {
+		return (c == '<' || c == '-' || c == '+' || c == '*');
 	}
 	
-	private boolean isWhitespace(char c) {
-		// returns true if character is white space
-		return false; 	// dummy value
+	public Scanner(SourceFile sourceFile) {
+		this.sourceFile = sourceFile;
+		currentChar = sourceFile.getSource();
 	}
 	
-	@SuppressWarnings("removal")
-	private byte scanToken() {
-		// as above
-		return new Byte(currentKind); // dummy value
+	private void takeIt() {
+		if (isScanningToken) {
+			currentSpelling.append(currentChar);
+		}
+		currentChar = sourceFile.getSource();
 	}
 	
 	private void scanSeparator() {
-		// as above
+		switch (currentChar) {
+		case ' ':
+		case '\n':
+		case '\r':
+		case '\t':
+			takeIt();
+			break;
+		}
+	}
+	
+	private int scanToken() {
+		switch (currentChar) {
+		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
+		case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
+		case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
+		case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J':
+		case 'K': case 'L': case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
+		case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
+			takeIt();
+		while (isLetter(currentChar) || isDigit(currentChar))
+			takeIt();
+		return Token.IDENTIFIER;
+		
+		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+			takeIt();
+			while(isDigit(currentChar))
+				takeIt();
+			return Token.INTLITERAL;
+			
+		case '+': case '*':
+			takeIt();
+			return Token.OPERATOR;
+			
+		case '.':
+			takeIt();
+			return Token.DOT;
+			
+		case '<':
+			takeIt();
+			if (currentChar == '-') {
+				takeIt();
+				return Token.BECOMES;
+			}
+			return Token.ERROR;
+			
+		case '[':
+			takeIt();
+			return Token.LBRACKET;
+			
+		case ']':
+			takeIt();
+			return Token.RBRACKET;
+			
+		case SourceFile.EOT:
+			return Token.EOT;
+			
+		default:
+			takeIt();
+			return Token.ERROR;
+		}
 	}
 	
 	public Token scan() {
-		while (currentChar == '!' || currentChar == ' ' || currentChar == '\n') {
+		Token token; 
+		int kind;
+		
+		isScanningToken = false;
+		while (currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t') {
 			scanSeparator();
 		}
 		
+		isScanningToken = true;
 		currentSpelling = new StringBuffer("");
-		currentKind = scanToken();
-		return new Token(currentKind, currentSpelling.toString());
+		
+		kind = scanToken();
+		
+		token = new Token(kind, currentSpelling.toString());
+		
+		return token;
 	}
 }

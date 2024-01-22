@@ -21,6 +21,7 @@ Production Rules
 ================
 
 Program				:=		Single-Command
+Token				:=		Letter (Letter | Digit)* | Digit Digit* | <- | . | [ | ] | EOF
 Command				:=		Single-Command (. Single-Command)*
 V-Name				:=		Identifier
 Single-Command		:=		Identifier (<- Expression | [Expression]) 
