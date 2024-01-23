@@ -9,7 +9,7 @@ public class SourceFile {
 	public static final char EOT = '\u0000';
 	
 	File sourceFile;
-	FileInputStream source;
+	FileInputStream source;		// TODO: Check if FileInputStream can be replaced with FileReader (also has read()- Method)
 	int currentLine;
 	
 	public SourceFile(String filename) {

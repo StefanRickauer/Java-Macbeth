@@ -1,10 +1,12 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
 public class Token {
+	
 	public int kind;
 	public String spelling;
+	public SourcePosition position;
 	
-	public Token(int kind, String spelling) {
+	public Token(int kind, String spelling, SourcePosition position) {
 		
 		if (kind == Token.IDENTIFIER) {
 			int currentKind = firstKeyword;
@@ -30,6 +32,7 @@ public class Token {
 		}
 		
 		this.spelling = spelling;
+		this.position = position;
 	}
 	
 	public static String spell(int kind) {
@@ -38,7 +41,7 @@ public class Token {
 	
 	@Override
 	public String toString() {
-		return "Kind=" + kind + ", spelling=" + spelling;
+		return "Kind=" + kind + ", spelling=" + spelling + ", position=" + position;
 	}
 	
 	public static final int

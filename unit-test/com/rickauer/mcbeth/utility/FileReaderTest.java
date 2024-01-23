@@ -14,7 +14,7 @@ class FileReaderTest {
 		String userDirectory = System.getProperty("user.dir");
 		String expected = "This is a test. { } ( ) + - . : = This was a test.";
 		
-		assertEquals(expected, FileReader.readFile(userDirectory + "/resources/readTest.txt"));
+		assertEquals(expected, FileReader.readFile(userDirectory + "/McBeth/resources/test data/readTest.txt"));
 	}
 	
 	@Test

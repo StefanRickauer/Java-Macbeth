@@ -4,112 +4,126 @@ public class Scanner {
 	
 	private SourceFile sourceFile;
 	
-	private char currentChar;		
+	private char currentCharacter;		
 	private StringBuffer currentSpelling;
 	private boolean isScanningToken;
 	
-	private boolean isLetter(char c) {
-		return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	boolean isLetter(char symbol) {
+		return ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
 	}
 	
-	private boolean isDigit(char c) {
-		return (c >= '0' && c <= '9');
+	boolean isDigit(char symbol) {
+		return (symbol >= '0' && symbol <= '9');
 	}
 	
-	private boolean isOperator(char c) {
-		return (c == '<' || c == '-' || c == '+' || c == '*');
+	boolean isOperator(char symbol) {
+		return (symbol == '<' || symbol == '-' || symbol == '+' || symbol == '*');
 	}
 	
 	public Scanner(SourceFile sourceFile) {
 		this.sourceFile = sourceFile;
-		currentChar = sourceFile.getSource();
+		currentCharacter = sourceFile.getSource();
 	}
 	
-	private void takeIt() {
+	private void consumeCharacter() {
 		if (isScanningToken) {
-			currentSpelling.append(currentChar);
+			currentSpelling.append(currentCharacter);
 		}
-		currentChar = sourceFile.getSource();
+		currentCharacter = sourceFile.getSource();
 	}
 	
 	private void scanSeparator() {
-		switch (currentChar) {
+		switch (currentCharacter) {
 		case ' ':
 		case '\n':
 		case '\r':
 		case '\t':
-			takeIt();
+			consumeCharacter();
 			break;
 		}
 	}
 	
 	private int scanToken() {
-		switch (currentChar) {
+		switch (currentCharacter) {
 		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
 		case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
 		case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
 		case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J':
 		case 'K': case 'L': case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
 		case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
-			takeIt();
-		while (isLetter(currentChar) || isDigit(currentChar))
-			takeIt();
+			consumeCharacter();
+		while (isLetter(currentCharacter) || isDigit(currentCharacter))
+			consumeCharacter();
 		return Token.IDENTIFIER;
 		
 		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
-			takeIt();
-			while(isDigit(currentChar))
-				takeIt();
+			consumeCharacter();
+			while(isDigit(currentCharacter))
+				consumeCharacter();
 			return Token.INTLITERAL;
 			
 		case '+': case '*':
-			takeIt();
+			consumeCharacter();
 			return Token.OPERATOR;
 			
+		case '\'':
+			consumeCharacter();
+			consumeCharacter();	// the quote
+			if (currentCharacter == '\'') {
+				consumeCharacter();
+				return Token.CHARLITERAL;
+			} else {
+				return Token.ERROR;
+			}
+			
 		case '.':
-			takeIt();
+			consumeCharacter();
 			return Token.DOT;
 			
 		case '<':
-			takeIt();
-			if (currentChar == '-') {
-				takeIt();
+			consumeCharacter();
+			if (currentCharacter == '-') {
+				consumeCharacter();
 				return Token.BECOMES;
 			}
 			return Token.ERROR;
 			
 		case '[':
-			takeIt();
+			consumeCharacter();
 			return Token.LBRACKET;
 			
 		case ']':
-			takeIt();
+			consumeCharacter();
 			return Token.RBRACKET;
 			
 		case SourceFile.EOT:
 			return Token.EOT;
 			
 		default:
-			takeIt();
+			consumeCharacter();
 			return Token.ERROR;
 		}
 	}
 	
 	public Token scan() {
 		Token token; 
+		SourcePosition position;
 		int kind;
 		
 		isScanningToken = false;
-		while (currentChar == ' ' || currentChar == '\n' || currentChar == '\r' || currentChar == '\t') {
+		while (currentCharacter == ' ' || currentCharacter == '\n' || currentCharacter == '\r' || currentCharacter == '\t') {
 			scanSeparator();
 		}
 		
 		isScanningToken = true;
 		currentSpelling = new StringBuffer("");
+		position = new SourcePosition();
+		position.start = sourceFile.getCurrentLine();
 		
 		kind = scanToken();
 		
-		token = new Token(kind, currentSpelling.toString());
+		position.finish = sourceFile.getCurrentLine();
+		token = new Token(kind, currentSpelling.toString(), position);
 		
 		return token;
 	}
