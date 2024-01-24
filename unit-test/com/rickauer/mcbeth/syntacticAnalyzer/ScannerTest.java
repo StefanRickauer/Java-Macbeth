@@ -88,6 +88,4 @@ class ScannerTest {
 			assertFalse(scanner.isOperator(digit));
 		}	
 	}
-	
-	//TODO: Write test cases for consumeCharacter (?), scanSeperator, scanToken, scan
 }

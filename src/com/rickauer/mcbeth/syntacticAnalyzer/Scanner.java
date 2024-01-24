@@ -22,14 +22,14 @@ public class Scanner {
 	
 	public Scanner(SourceFile sourceFile) {
 		this.sourceFile = sourceFile;
-		currentCharacter = sourceFile.getSource();
+		currentCharacter = sourceFile.pickNextCharacter();
 	}
 	
 	private void consumeCharacter() {
 		if (isScanningToken) {
 			currentSpelling.append(currentCharacter);
 		}
-		currentCharacter = sourceFile.getSource();
+		currentCharacter = sourceFile.pickNextCharacter();
 	}
 	
 	private void scanSeparator() {
@@ -40,6 +40,8 @@ public class Scanner {
 		case '\t':
 			consumeCharacter();
 			break;
+		default:	
+			throw new IllegalStateException("Did not recognize separator.");
 		}
 	}
 	
