@@ -24,7 +24,7 @@ class SourceFileTest {
 	@Test
 	void getSourceTest() {
 		for (char expectedCharacter : expected.toCharArray()) {
-			assertEquals(expectedCharacter, source.pickNextCharacter());	
+			assertEquals(expectedCharacter, source.fetchNextCharacter());	
 		}
 	}
 }

@@ -21,7 +21,7 @@ public class SourceFile {
 		}
 	}
 	
-	char pickNextCharacter() {
+	char fetchNextCharacter() {
 		try {
 			int c = source.read();
 			

@@ -22,14 +22,14 @@ public class Scanner {
 	
 	public Scanner(SourceFile sourceFile) {
 		this.sourceFile = sourceFile;
-		currentCharacter = sourceFile.pickNextCharacter();
+		currentCharacter = sourceFile.fetchNextCharacter();
 	}
 	
 	private void consumeCharacter() {
 		if (isScanningToken) {
 			currentSpelling.append(currentCharacter);
 		}
-		currentCharacter = sourceFile.pickNextCharacter();
+		currentCharacter = sourceFile.fetchNextCharacter();
 	}
 	
 	private void scanSeparator() {

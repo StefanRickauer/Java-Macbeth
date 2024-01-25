@@ -45,26 +45,22 @@ public class Token {
 	}
 	
 	public static final int
-			// literals, identifier, operator
+
 			CHARLITERAL =  0,
 			INTLITERAL 	=  1,
 			IDENTIFIER 	=  2,  
 			OPERATOR 	=  3, 
 		
-			// keywords (required to be in alphabetical order)
 			NUMBER 		=  4, 
 			SHOW 		=  5, 
 			STRING 		=  6, 
 		
-			// punctuation
 			BECOMES 	=  7,
 			DOT 		=  8,  
 		
-			// bracket
 			LBRACKET 	=  9, 
 			RBRACKET 	= 10,
 		
-			// special token
 			EOT 		= 11,
 			ERROR 		= 12;
 	
