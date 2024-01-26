@@ -10,15 +10,15 @@ public final class Scanner {
 	private StringBuffer currentSpelling;
 	private boolean isScanningToken;
 	
-	boolean isLetter(char symbol) {
+	private boolean isLetter(char symbol) {
 		return ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
 	}
 	
-	boolean isDigit(char symbol) {
+	private boolean isDigit(char symbol) {
 		return (symbol >= '0' && symbol <= '9');
 	}
 	
-	boolean isOperator(char symbol) {
+	private boolean isOperator(char symbol) {
 		return (symbol == '<' || symbol == '-' || symbol == '+' || symbol == '*');
 	}
 	
