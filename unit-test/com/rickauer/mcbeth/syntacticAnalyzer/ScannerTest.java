@@ -6,13 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ScannerTest {
+final class ScannerTest {
 	
 	static Scanner scanner;
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
 	@BeforeAll
-	static void initializeTestData() {
+	void initializeTestData() {
 		
 		String currentDirectory = System.getProperty("user.dir");
 		

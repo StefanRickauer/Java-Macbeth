@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class SourceFileTest {
+final class SourceFileTest {
 
 	static SourceFile source;
 	static String expected;

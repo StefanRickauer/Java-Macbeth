@@ -1,6 +1,6 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
-public class SourcePosition {
+public final class SourcePosition {
 	public int start, finish;
 	
 	public SourcePosition() {

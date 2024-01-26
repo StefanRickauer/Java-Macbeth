@@ -1,6 +1,6 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
-public class Token {
+public final class Token {
 	
 	public int kind;
 	public String spelling;

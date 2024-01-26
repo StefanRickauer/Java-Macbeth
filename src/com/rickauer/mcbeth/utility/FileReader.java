@@ -7,6 +7,11 @@ import java.nio.file.Paths;
 
 public class FileReader {
 	
+	// Suppress default constructor to enforce non instanciability
+	private FileReader() {
+		throw new AssertionError();
+	}
+	
 	public static String readFile(String path) {	
 		try {
 			byte[] source = Files.readAllBytes(Paths.get(path));

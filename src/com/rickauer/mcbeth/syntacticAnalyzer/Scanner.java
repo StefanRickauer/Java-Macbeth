@@ -1,6 +1,8 @@
 package com.rickauer.mcbeth.syntacticAnalyzer;
 
-public class Scanner {
+// TODO: Write test cases and consider to use extended switch statements
+
+public final class Scanner {
 	
 	private SourceFile sourceFile;
 	

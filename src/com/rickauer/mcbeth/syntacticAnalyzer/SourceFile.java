@@ -3,7 +3,7 @@ package com.rickauer.mcbeth.syntacticAnalyzer;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class SourceFile {
+public final class SourceFile {
 	
 	public static final char EOL = '\n';
 	public static final char EOT = '\u0000';
