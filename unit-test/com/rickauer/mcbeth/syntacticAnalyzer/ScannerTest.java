@@ -12,7 +12,7 @@ final class ScannerTest {
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
 	@BeforeAll
-	void initializeTestData() {
+	static void initializeTestData() {
 		
 		String currentDirectory = System.getProperty("user.dir");
 		
