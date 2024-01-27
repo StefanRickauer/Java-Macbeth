@@ -36,21 +36,19 @@ final class ScannerTest {
 	void isLetterTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			
-			//	(cast to return type)   (object of class of method, argument)
-			assertTrue( (boolean) getIsLetter().invoke(scanner, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scanner, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertTrue( (boolean) getIsLetter().invoke(scanner, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scanner, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getIsLetter().invoke(scanner, digit));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scanner, digit));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getIsLetter().invoke(scanner, operator));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scanner, operator));
 		}
 	}
 	
@@ -58,19 +56,19 @@ final class ScannerTest {
 	void isDigitTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char digit : digits.toCharArray()) {
-			assertTrue( (boolean) getIsDigit().invoke(scanner, digit));
+			assertTrue( (boolean) getScannerPredicate("isDigit").invoke(scanner, digit));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getIsDigit().invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getIsDigit().invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, currentCharacter));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getIsDigit().invoke(scanner, operator));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, operator));
 		}
 	}
 	
@@ -78,55 +76,33 @@ final class ScannerTest {
 	void isOperatorTest() throws IllegalAccessException, InvocationTargetException {
 
 		for (char operator : operators.toCharArray()) {
-			assertTrue( (boolean) getIsOperator().invoke(scanner, operator));
+			assertTrue( (boolean) getScannerPredicate("isOperator").invoke(scanner, operator));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getIsOperator().invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getIsOperator().invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getIsOperator().invoke(scanner, digit));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, digit));
 		}	
 	}
 	
-	private Method getIsLetter() {
+	private Method getScannerPredicate(String methodName) {
+		
+		Class<? extends Scanner> clazz = scanner.getClass();
 		Method method = null;
-		try {	
-			//	     class of method					 (method name,  class of argument)
-			method = scanner.getClass().getDeclaredMethod("isLetter", char.class);
-			
-			// to access private method
-			method.setAccessible(true);		
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} 
-		return method;
-	}
-	
-	private Method getIsDigit() {
-		Method method = null;
+		
 		try {
-			method = scanner.getClass().getDeclaredMethod("isDigit", char.class);
+			method = clazz.getDeclaredMethod(methodName, char.class);
 			method.setAccessible(true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
-		} 
-		return method;
-	}
-	
-	private Method getIsOperator() {
-		Method method = null;
-		try {
-			method = scanner.getClass().getDeclaredMethod("isOperator", char.class);
-			method.setAccessible(true);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} 
+		}
 		return method;
 	}
 }
