@@ -15,7 +15,7 @@ final class ScannerTest {
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
 	@BeforeAll
-	static void initializeTestData() {
+	private static void initializeTestData() {
 		
 		String currentDirectory = System.getProperty("user.dir");
 		
@@ -92,7 +92,7 @@ final class ScannerTest {
 		}	
 	}
 	
-	private Method getScannerPredicate(String methodName) {
+	static Method getScannerPredicate(String methodName) {
 		
 		Class<? extends Scanner> clazz = scanner.getClass();
 		Method method = null;
