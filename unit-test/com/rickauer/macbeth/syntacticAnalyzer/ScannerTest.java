@@ -10,10 +10,6 @@ import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.rickauer.macbeth.syntacticAnalyzer.Scanner;
-import com.rickauer.macbeth.syntacticAnalyzer.SourceFile;
-import com.rickauer.macbeth.syntacticAnalyzer.Token;
-
 public final class ScannerTest {
 	
 	static Scanner scannerTestSeriesOne, scannerTestSeriesTwo;
