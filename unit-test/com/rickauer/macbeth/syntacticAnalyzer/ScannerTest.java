@@ -32,7 +32,7 @@ public final class ScannerTest {
 		allCharactersLowerCase = "abcdefghijklmnopqrstuvwxyz";
 		allCharactersUpperCase = allCharactersLowerCase.toUpperCase();
 		digits = "0123456789";
-		operators = "<-+*";
+		operators = "+*";
 	}
 	
 	@Test

@@ -1,7 +1,7 @@
 Terminal Symbols
 ================
 
-number  string  show  <-  +  *  .  [  ] '
+number  string  show  <-  + *  .  [  ] '
 
 
 Nonterminal Symbols

@@ -5,33 +5,37 @@ package com.rickauer.macbeth.syntacticAnalyzer;
 public final class Scanner {
 	
 	private SourceFile sourceFile;
-	
 	private char currentCharacter;		
 	private StringBuffer currentSpelling;
 	private boolean isScanningToken;
 	
-	private boolean isLetter(char symbol) {
-		return ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
-	}
-	
-	private boolean isDigit(char symbol) {
-		return (symbol >= '0' && symbol <= '9');
-	}
-	
-	private boolean isOperator(char symbol) {
-		return (symbol == '<' || symbol == '-' || symbol == '+' || symbol == '*');
-	}
 	
 	public Scanner(SourceFile sourceFile) {
 		this.sourceFile = sourceFile;
 		currentCharacter = sourceFile.fetchNextCharacter();
 	}
 	
-	private void consumeCharacter() {
-		if (isScanningToken) {
-			currentSpelling.append(currentCharacter);
+	public Token scan() {
+		Token token; 
+		SourcePosition position;
+		int kind;
+		
+		isScanningToken = false;
+		while (currentCharacter == ' ' || currentCharacter == '\n' || currentCharacter == '\r' || currentCharacter == '\t') {
+			scanSeparator();
 		}
-		currentCharacter = sourceFile.fetchNextCharacter();
+		
+		isScanningToken = true;
+		currentSpelling = new StringBuffer("");
+		position = new SourcePosition();
+		position.start = sourceFile.getCurrentLine();
+		
+		kind = scanToken();
+		
+		position.finish = sourceFile.getCurrentLine();
+		token = new Token(kind, currentSpelling.toString(), position);
+		
+		return token;
 	}
 	
 	private void scanSeparator() {
@@ -47,6 +51,13 @@ public final class Scanner {
 		}
 	}
 	
+	private void consumeCharacter() {
+		if (isScanningToken) {
+			currentSpelling.append(currentCharacter);
+		}
+		currentCharacter = sourceFile.fetchNextCharacter();
+	}
+		
 	private int scanToken() {
 		switch (currentCharacter) {
 		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
@@ -68,6 +79,8 @@ public final class Scanner {
 			
 		case '+': case '*':
 			consumeCharacter();
+			while(isOperator(currentCharacter))
+				consumeCharacter();
 			return Token.OPERATOR;
 			
 		case '\'':
@@ -109,26 +122,15 @@ public final class Scanner {
 		}
 	}
 	
-	public Token scan() {
-		Token token; 
-		SourcePosition position;
-		int kind;
-		
-		isScanningToken = false;
-		while (currentCharacter == ' ' || currentCharacter == '\n' || currentCharacter == '\r' || currentCharacter == '\t') {
-			scanSeparator();
-		}
-		
-		isScanningToken = true;
-		currentSpelling = new StringBuffer("");
-		position = new SourcePosition();
-		position.start = sourceFile.getCurrentLine();
-		
-		kind = scanToken();
-		
-		position.finish = sourceFile.getCurrentLine();
-		token = new Token(kind, currentSpelling.toString(), position);
-		
-		return token;
+	private boolean isLetter(char symbol) {
+		return ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
+	}
+	
+	private boolean isDigit(char symbol) {
+		return (symbol >= '0' && symbol <= '9');
+	}
+	
+	private boolean isOperator(char symbol) {
+		return (symbol == '+' || symbol == '*');
 	}
 }
