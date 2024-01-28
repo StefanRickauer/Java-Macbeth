@@ -15,7 +15,7 @@ public final class Scanner {
 		currentCharacter = sourceFile.fetchNextCharacter();
 	}
 	
-	public Token scan() {
+	public Token scanSourceCode() {
 		Token token; 
 		SourcePosition position;
 		int kind;

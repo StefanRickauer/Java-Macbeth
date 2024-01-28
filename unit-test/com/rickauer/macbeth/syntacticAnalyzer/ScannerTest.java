@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 public final class ScannerTest {
 	
-	static Scanner scannerTestSeriesOne, scannerTestSeriesTwo;
+	static Scanner scannerTestSeriesOne, scannerTestSeriesTwo, scannerTestSeriesThree;
 	static Class<? extends Scanner> clazz;
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
@@ -24,6 +24,7 @@ public final class ScannerTest {
 		try {
 			scannerTestSeriesOne = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
 			scannerTestSeriesTwo = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-misc"));
+			scannerTestSeriesThree = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-tokensWithoutKeywords"));
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -155,5 +156,18 @@ public final class ScannerTest {
 			throw new RuntimeException(e);
 		}
 		return method;
+	}
+	
+	@Test
+	void scanSourceCodeTest() {
+		assertEquals(Token.IDENTIFIER, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.BECOMES, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.INTLITERAL, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.DOT, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.IDENTIFIER, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.BECOMES, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.CHARLITERAL, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.DOT, scannerTestSeriesThree.scanSourceCode().kind);
+		assertEquals(Token.EOT, scannerTestSeriesThree.scanSourceCode().kind);
 	}
 }
