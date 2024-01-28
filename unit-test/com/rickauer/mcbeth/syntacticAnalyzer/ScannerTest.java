@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 public final class ScannerTest {
 	
-	static Scanner scanner;
+	static Scanner scannerTestSeriesOne, scannerTestSeriesTwo;
 	static Class<? extends Scanner> clazz;
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
@@ -22,12 +22,13 @@ public final class ScannerTest {
 		String currentDirectory = System.getProperty("user.dir");
 		
 		try {
-			scanner = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
+			scannerTestSeriesOne = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
+			scannerTestSeriesTwo = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
 		}
-		clazz = scanner.getClass();
+		clazz = scannerTestSeriesOne.getClass();
 		allCharactersLowerCase = "abcdefghijklmnopqrstuvwxyz";
 		allCharactersUpperCase = allCharactersLowerCase.toUpperCase();
 		digits = "0123456789";
@@ -38,19 +39,19 @@ public final class ScannerTest {
 	void isLetterTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scanner, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scanner, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scanner, digit));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, digit));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scanner, operator));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, operator));
 		}
 	}
 	
@@ -58,19 +59,19 @@ public final class ScannerTest {
 	void isDigitTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char digit : digits.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isDigit").invoke(scanner, digit));
+			assertTrue( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, digit));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scanner, operator));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, operator));
 		}
 	}
 	
@@ -78,19 +79,19 @@ public final class ScannerTest {
 	void isOperatorTest() throws IllegalAccessException, InvocationTargetException {
 
 		for (char operator : operators.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isOperator").invoke(scanner, operator));
+			assertTrue( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, operator));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scanner, digit));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, digit));
 		}	
 	}
 	
@@ -114,8 +115,8 @@ public final class ScannerTest {
 		scannerCurrentCharacter.setAccessible(true);
 		
 		for (char expectedCharacter : allCharactersLowerCase.toCharArray()) {
-			assertEquals(expectedCharacter, scannerCurrentCharacter.get(scanner));
-			getScannerConsumeCharacter().invoke(scanner);
+			assertEquals(expectedCharacter, scannerCurrentCharacter.get(scannerTestSeriesOne));
+			getScannerConsumeCharacter().invoke(scannerTestSeriesOne);
 		}
 	}
 	

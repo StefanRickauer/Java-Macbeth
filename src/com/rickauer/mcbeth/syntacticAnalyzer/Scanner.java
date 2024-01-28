@@ -43,7 +43,7 @@ public final class Scanner {
 			consumeCharacter();
 			break;
 		default:	
-			throw new IllegalStateException("Did not recognize separator.");
+			throw new AssertionError();
 		}
 	}
 	
