@@ -1,9 +1,10 @@
-package com.rickauer.mcbeth;
+package com.rickauer.macbeth;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
-import com.rickauer.mcbeth.syntacticAnalyzer.*;
-import com.rickauer.mcbeth.utility.*;
+
+import com.rickauer.macbeth.syntacticAnalyzer.*;
+import com.rickauer.macbeth.utility.*;
 
 @Suite
 @SelectClasses({ScannerTest.class, SourceFileTest.class, FileReaderTest.class})

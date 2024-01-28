@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.syntacticAnalyzer;
+package com.rickauer.macbeth.syntacticAnalyzer;
 
 // TODO: Write test cases and consider to use extended switch statements
 

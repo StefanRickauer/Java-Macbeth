@@ -1,8 +1,11 @@
-package com.rickauer.mcbeth.utility;
+package com.rickauer.macbeth.utility;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import com.rickauer.macbeth.utility.FileReader;
+
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;

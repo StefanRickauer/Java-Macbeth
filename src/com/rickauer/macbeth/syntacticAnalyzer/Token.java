@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.syntacticAnalyzer;
+package com.rickauer.macbeth.syntacticAnalyzer;
 
 public final class Token {
 	

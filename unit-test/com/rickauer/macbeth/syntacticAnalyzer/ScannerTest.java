@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.syntacticAnalyzer;
+package com.rickauer.macbeth.syntacticAnalyzer;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,6 +9,10 @@ import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.rickauer.macbeth.syntacticAnalyzer.Scanner;
+import com.rickauer.macbeth.syntacticAnalyzer.SourceFile;
+import com.rickauer.macbeth.syntacticAnalyzer.Token;
 
 public final class ScannerTest {
 	
@@ -23,7 +27,7 @@ public final class ScannerTest {
 		
 		try {
 			scannerTestSeriesOne = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
-			scannerTestSeriesTwo = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
+			scannerTestSeriesTwo = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-misc"));
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -126,6 +130,30 @@ public final class ScannerTest {
 		
 		try {
 			method = clazz.getDeclaredMethod("consumeCharacter");
+			method.setAccessible(true);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return method;
+	}
+	
+	@Test
+	void scanTokenTest() throws IllegalAccessException, InvocationTargetException {
+		assertEquals(Token.CHARLITERAL, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.INTLITERAL, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.IDENTIFIER, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.OPERATOR, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.BECOMES, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.DOT, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.LBRACKET, getScannerScanToken().invoke(scannerTestSeriesTwo));
+		assertEquals(Token.RBRACKET, getScannerScanToken().invoke(scannerTestSeriesTwo));
+	}
+	
+	private static Method getScannerScanToken() {
+		Method method = null;
+		
+		try {
+			method = clazz.getDeclaredMethod("scanToken");
 			method.setAccessible(true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -1,9 +1,11 @@
-package com.rickauer.mcbeth.syntacticAnalyzer;
+package com.rickauer.macbeth.syntacticAnalyzer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.rickauer.macbeth.syntacticAnalyzer.SourceFile;
 
 public final class SourceFileTest {
 

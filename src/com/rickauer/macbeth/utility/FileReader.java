@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.utility;
+package com.rickauer.macbeth.utility;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

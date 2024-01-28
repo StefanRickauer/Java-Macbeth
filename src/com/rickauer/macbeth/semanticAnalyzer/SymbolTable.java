@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.semanticAnalyzer;
+package com.rickauer.macbeth.semanticAnalyzer;
 
 public class SymbolTable {
 	// TODO implement class

@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth;
+package com.rickauer.macbeth;
 
 public class Main {
 	public static void main(String[] args) {

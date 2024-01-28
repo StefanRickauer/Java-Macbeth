@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.syntacticAnalyzer;
+package com.rickauer.macbeth.syntacticAnalyzer;
 
 import java.io.File;
 import java.io.FileInputStream;

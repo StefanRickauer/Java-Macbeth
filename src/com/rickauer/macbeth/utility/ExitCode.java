@@ -1,4 +1,4 @@
-package com.rickauer.mcbeth.utility;
+package com.rickauer.macbeth.utility;
 // TODO check necessity of this enum and delete if not needed
 public enum ExitCode {
 	SUCCESS 				(0),
