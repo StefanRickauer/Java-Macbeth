@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-final class ScannerTest {
+public final class ScannerTest {
 	
 	static Scanner scanner;
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
@@ -92,7 +92,7 @@ final class ScannerTest {
 		}	
 	}
 	
-	static Method getScannerPredicate(String methodName) {
+	private static Method getScannerPredicate(String methodName) {
 		
 		Class<? extends Scanner> clazz = scanner.getClass();
 		Method method = null;
