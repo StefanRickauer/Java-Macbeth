@@ -122,15 +122,15 @@ public final class Scanner {
 		}
 	}
 	
-	private boolean isLetter(char symbol) {
+	private static boolean isLetter(char symbol) {
 		return ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
 	}
 	
-	private boolean isDigit(char symbol) {
+	private static boolean isDigit(char symbol) {
 		return (symbol >= '0' && symbol <= '9');
 	}
 	
-	private boolean isOperator(char symbol) {
+	private static boolean isOperator(char symbol) {
 		return (symbol == '+' || symbol == '*');
 	}
 }

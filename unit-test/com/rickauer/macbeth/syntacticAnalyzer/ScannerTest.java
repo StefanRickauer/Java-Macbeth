@@ -36,63 +36,66 @@ public final class ScannerTest {
 		operators = "+*";
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void isLetterTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(null, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, currentCharacter));
+			assertTrue( (boolean) getScannerPredicate("isLetter").invoke(null, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, digit));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(null, digit));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(scannerTestSeriesOne, operator));
+			assertFalse( (boolean) getScannerPredicate("isLetter").invoke(null, operator));
 		}
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void isDigitTest() throws IllegalAccessException, InvocationTargetException {
 		
 		for (char digit : digits.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, digit));
+			assertTrue( (boolean) getScannerPredicate("isDigit").invoke(null, digit));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(null, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(null, currentCharacter));
 		}
 		
 		for (char operator : operators.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(scannerTestSeriesOne, operator));
+			assertFalse( (boolean) getScannerPredicate("isDigit").invoke(null, operator));
 		}
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void isOperatorTest() throws IllegalAccessException, InvocationTargetException {
 
 		for (char operator : operators.toCharArray()) {
-			assertTrue( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, operator));
+			assertTrue( (boolean) getScannerPredicate("isOperator").invoke(null, operator));
 		}
 		
 		for (char currentCharacter : allCharactersLowerCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(null, currentCharacter));
 		}
 		
 		for (char currentCharacter : allCharactersUpperCase.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, currentCharacter));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(null, currentCharacter));
 		}
 		
 		for (char digit : digits.toCharArray()) {
-			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(scannerTestSeriesOne, digit));
+			assertFalse( (boolean) getScannerPredicate("isOperator").invoke(null, digit));
 		}	
 	}
 	
@@ -109,6 +112,7 @@ public final class ScannerTest {
 		return method;
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void consumeCharacterTest() throws IllegalAccessException, InvocationTargetException, NoSuchFieldException, SecurityException {
 		
@@ -134,6 +138,7 @@ public final class ScannerTest {
 		return method;
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void scanTokenTest() throws IllegalAccessException, InvocationTargetException {
 		assertEquals(Token.CHARLITERAL, getScannerScanToken().invoke(scannerTestSeriesTwo));
@@ -158,6 +163,7 @@ public final class ScannerTest {
 		return method;
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void scanSourceCodeTest() {
 		assertEquals(Token.IDENTIFIER, scannerTestSeriesThree.scanSourceCode().kind);

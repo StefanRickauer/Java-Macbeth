@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 public final class FileReaderTest {
 
+	@SuppressWarnings("static-method")
 	@Test
 	void readFileTest() {
 		String userDirectory = System.getProperty("user.dir");
@@ -16,6 +17,7 @@ public final class FileReaderTest {
 		assertEquals(expected, FileReader.readFile(userDirectory + "/resources/test data/readTest.txt"));
 	}
 	
+	@SuppressWarnings("static-method")
 	@Test
 	void readFileWithInvalidPathTest() {
 		assertThrows(NoSuchFileException.class, () -> {
