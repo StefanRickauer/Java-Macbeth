@@ -3,6 +3,7 @@ package com.rickauer.mcbeth.syntacticAnalyzer;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 public final class ScannerTest {
 	
 	static Scanner scanner;
+	static Class<? extends Scanner> clazz;
 	static String allCharactersLowerCase, allCharactersUpperCase, digits, operators;
 	
 	@BeforeAll
@@ -20,12 +22,12 @@ public final class ScannerTest {
 		String currentDirectory = System.getProperty("user.dir");
 		
 		try {
-			scanner = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-program.mcb"));
+			scanner = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-lowerCaseAlphabeth"));
 		} catch (Exception e) {
 			e.getMessage();
 			e.printStackTrace();
 		}
-		
+		clazz = scanner.getClass();
 		allCharactersLowerCase = "abcdefghijklmnopqrstuvwxyz";
 		allCharactersUpperCase = allCharactersLowerCase.toUpperCase();
 		digits = "0123456789";
@@ -94,11 +96,35 @@ public final class ScannerTest {
 	
 	private static Method getScannerPredicate(String methodName) {
 		
-		Class<? extends Scanner> clazz = scanner.getClass();
 		Method method = null;
 		
 		try {
 			method = clazz.getDeclaredMethod(methodName, char.class);
+			method.setAccessible(true);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return method;
+	}
+	
+	@Test
+	void consumeCharacterTest() throws IllegalAccessException, InvocationTargetException, NoSuchFieldException, SecurityException {
+		
+		Field scannerCurrentCharacter = clazz.getDeclaredField("currentCharacter");
+		scannerCurrentCharacter.setAccessible(true);
+		
+		for (char expectedCharacter : allCharactersLowerCase.toCharArray()) {
+			assertEquals(expectedCharacter, scannerCurrentCharacter.get(scanner));
+			getScannerConsumeCharacter().invoke(scanner);
+		}
+	}
+	
+	private static Method getScannerConsumeCharacter() {
+		
+		Method method = null;
+		
+		try {
+			method = clazz.getDeclaredMethod("consumeCharacter");
 			method.setAccessible(true);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
