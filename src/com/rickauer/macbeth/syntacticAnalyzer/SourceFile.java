@@ -1,7 +1,6 @@
 package com.rickauer.macbeth.syntacticAnalyzer;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 
 public final class SourceFile {

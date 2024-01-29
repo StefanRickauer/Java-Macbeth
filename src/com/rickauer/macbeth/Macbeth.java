@@ -1,6 +1,6 @@
 package com.rickauer.macbeth;
 
-public class Main {
+public class Macbeth {
 	public static void main(String[] args) {
 		
 		try {
