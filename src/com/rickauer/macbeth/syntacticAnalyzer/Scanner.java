@@ -1,6 +1,5 @@
 package com.rickauer.macbeth.syntacticAnalyzer;
 
-// TODO: Write test cases and consider to use extended switch statements
 
 public final class Scanner {
 	
@@ -40,14 +39,8 @@ public final class Scanner {
 	
 	private void scanSeparator() {
 		switch (currentCharacter) {
-		case ' ':
-		case '\n':
-		case '\r':
-		case '\t':
-			consumeCharacter();
-			break;
-		default:	
-			throw new AssertionError();
+		case ' ', '\n', '\r', '\t' -> consumeCharacter();
+		default -> throw new AssertionError();
 		}
 	}
 	
@@ -60,65 +53,73 @@ public final class Scanner {
 		
 	private int scanToken() {
 		switch (currentCharacter) {
-		case 'a': case 'b': case 'c': case 'd': case 'e': case 'f': case 'g': case 'h': case 'i': case 'j':
-		case 'k': case 'l': case 'm': case 'n': case 'o': case 'p': case 'q': case 'r': case 's': case 't':
-		case 'u': case 'v': case 'w': case 'x': case 'y': case 'z':
-		case 'A': case 'B': case 'C': case 'D': case 'E': case 'F': case 'G': case 'H': case 'I': case 'J':
-		case 'K': case 'L': case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R': case 'S': case 'T':
-		case 'U': case 'V': case 'W': case 'X': case 'Y': case 'Z':
-			consumeCharacter();
-		while (isLetter(currentCharacter) || isDigit(currentCharacter))
-			consumeCharacter();
-		return Token.IDENTIFIER;
 		
-		case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9':
+		case 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+		'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+		'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' -> {
+			consumeCharacter();
+			while (isLetter(currentCharacter) || isDigit(currentCharacter))
+				consumeCharacter();
+			return Token.IDENTIFIER;
+			}
+			
+		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> {
 			consumeCharacter();
 			while(isDigit(currentCharacter))
 				consumeCharacter();
 			return Token.INTLITERAL;
+			}
 			
-		case '+': case '*':
+		case '+', '*' -> {
 			consumeCharacter();
 			while(isOperator(currentCharacter))
 				consumeCharacter();
 			return Token.OPERATOR;
+			}
 			
-		case '\'':
+		case '\'' -> {
 			consumeCharacter();
 			consumeCharacter();	// the quote
 			if (currentCharacter == '\'') {
 				consumeCharacter();
 				return Token.CHARLITERAL;
-			} else {
+				} else {
 				return Token.ERROR;
+				}
 			}
 			
-		case '.':
+		case '.' -> {
 			consumeCharacter();
 			return Token.DOT;
+			}
 			
-		case '<':
+		case '<' -> {
 			consumeCharacter();
 			if (currentCharacter == '-') {
 				consumeCharacter();
 				return Token.BECOMES;
-			}
+				}
 			return Token.ERROR;
+			}
 			
-		case '[':
+		case '[' -> {
 			consumeCharacter();
 			return Token.LBRACKET;
+			}
 			
-		case ']':
+		case ']' -> {
 			consumeCharacter();
 			return Token.RBRACKET;
+			}
 			
-		case SourceFile.EOT:
-			return Token.EOT;
+		case SourceFile.EOT -> { 
+			return Token.EOT; 
+			}
 			
-		default:
+		default -> {
 			consumeCharacter();
-			return Token.ERROR;
+			return Token.ERROR; 
+			}
 		}
 	}
 	

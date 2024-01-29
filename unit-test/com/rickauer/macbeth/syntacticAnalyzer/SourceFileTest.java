@@ -19,7 +19,6 @@ public final class SourceFileTest {
 		expected = "This is my test string.\r\nThis is line 2.\r\nAnd finally, this is line 3. Have a nice day!";
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void getSourceTest() {
 		for (char expectedCharacter : expected.toCharArray()) {

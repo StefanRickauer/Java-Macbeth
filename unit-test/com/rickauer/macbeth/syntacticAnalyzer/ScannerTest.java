@@ -36,7 +36,6 @@ public final class ScannerTest {
 		operators = "+*";
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void isLetterTest() throws IllegalAccessException, InvocationTargetException {
 		
@@ -57,7 +56,6 @@ public final class ScannerTest {
 		}
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void isDigitTest() throws IllegalAccessException, InvocationTargetException {
 		
@@ -78,7 +76,6 @@ public final class ScannerTest {
 		}
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void isOperatorTest() throws IllegalAccessException, InvocationTargetException {
 
@@ -112,7 +109,6 @@ public final class ScannerTest {
 		return method;
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void consumeCharacterTest() throws IllegalAccessException, InvocationTargetException, NoSuchFieldException, SecurityException {
 		
@@ -138,7 +134,6 @@ public final class ScannerTest {
 		return method;
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void scanTokenTest() throws IllegalAccessException, InvocationTargetException {
 		assertEquals(Token.CHARLITERAL, getScannerScanToken().invoke(scannerTestSeriesTwo));
@@ -163,7 +158,6 @@ public final class ScannerTest {
 		return method;
 	}
 	
-	@SuppressWarnings("static-method")
 	@Test
 	void scanSourceCodeTest() {
 		assertEquals(Token.IDENTIFIER, scannerTestSeriesThree.scanSourceCode().kind);

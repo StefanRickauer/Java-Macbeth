@@ -2,6 +2,7 @@ package com.rickauer.macbeth.syntacticAnalyzer;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 
 public final class SourceFile {
 	
@@ -9,13 +10,13 @@ public final class SourceFile {
 	public static final char EOT = '\u0000';
 	
 	File sourceFile;
-	FileInputStream source;		// TODO: Check if FileInputStream can be replaced with FileReader (also has read()- Method)
+	FileReader source;		
 	int currentLine;
 	
 	public SourceFile(String filename) {
 		try {
 			sourceFile = new File(filename);
-			source = new FileInputStream(sourceFile);
+			source = new FileReader(sourceFile);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
