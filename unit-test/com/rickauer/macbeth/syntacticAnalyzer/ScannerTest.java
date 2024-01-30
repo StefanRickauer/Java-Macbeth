@@ -98,15 +98,13 @@ public final class ScannerTest {
 	
 	private static Method getScannerPredicate(String methodName) {
 		
-		Method method = null;
-		
 		try {
-			method = clazz.getDeclaredMethod(methodName, char.class);
+			Method method = clazz.getDeclaredMethod(methodName, char.class);
 			method.setAccessible(true);
+			return method;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return method;
 	}
 	
 	@Test
@@ -123,15 +121,13 @@ public final class ScannerTest {
 	
 	private static Method getScannerConsumeCharacter() {
 		
-		Method method = null;
-		
 		try {
-			method = clazz.getDeclaredMethod("consumeCharacter");
+			Method method = clazz.getDeclaredMethod("consumeCharacter");
 			method.setAccessible(true);
+			return method;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return method;
 	}
 	
 	@Test
@@ -147,15 +143,14 @@ public final class ScannerTest {
 	}
 	
 	private static Method getScannerScanToken() {
-		Method method = null;
 		
 		try {
-			method = clazz.getDeclaredMethod("scanToken");
+			Method method = clazz.getDeclaredMethod("scanToken");
 			method.setAccessible(true);
+			return method;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return method;
 	}
 	
 	@Test
