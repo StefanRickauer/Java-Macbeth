@@ -1,9 +1,12 @@
 package com.rickauer.macbeth.syntacticAnalyzer;
 
+import com.rickauer.macbeth.ErrorReporter;
+
 // TODO: Refactor identifiers when class is complete
 
 public class Parser {
 	private Scanner lexeicalAnalyser;
+	private ErrorReporter errorReporter;
 	private Token currentToken;
 	private SourcePosition previousTokenPosition;
 	
@@ -17,7 +20,7 @@ public class Parser {
 			previousTokenPosition = currentToken.position;
 			currentToken = lexeicalAnalyser.scanSourceCode();
 		} else {
-			throw new SyntaxError("Expected: " + Token.spell(tokenExpected));
+			syntacticError("\"%\" expected here", Token.spell(tokenExpected));
 		}
 	}
 	
@@ -34,5 +37,10 @@ public class Parser {
 		position.finish = previousTokenPosition.finish;
 	}
 	
+	void syntacticError(String messageTemplate, String expectedToken) throws SyntaxError {
+		SourcePosition position = currentToken.position;
+		errorReporter.reportError(messageTemplate, expectedToken, position);
+		throw new SyntaxError();
+	}
 	// TODO: Implement remaining logic
 }
