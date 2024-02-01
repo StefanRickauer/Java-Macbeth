@@ -11,7 +11,8 @@ public class Program extends AST {
 		command = cAST;
 	}
 	
-	public Object visit(Visitor visitor, Object o) {
-		return visitor.visitProgram(this, o);
+	@Override
+	public Object visit(Visitor visitor, Object object) {
+		return visitor.visitProgram(this, object);
 	}
 }

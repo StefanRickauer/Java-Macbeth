@@ -18,7 +18,7 @@ public final class ParserTest {
 	public static void initializeTestData() {
 		String currentDirectory = System.getProperty("user.dir");
 		scanner = new Scanner(new SourceFile(currentDirectory + "/resources/test data/test-tokensWithoutKeywords"));
-		tokensWithoutKeywordsExpected = new int[] {Token.IDENTIFIER, Token.BECOMES, Token.INTLITERAL, Token.DOT, Token.IDENTIFIER, Token.BECOMES, Token.CHARLITERAL, Token.DOT};
+		tokensWithoutKeywordsExpected = new int[] {Token.IDENTIFIER, Token.BECOMES, Token.INTLITERAL, Token.DOT, Token.IDENTIFIER, Token.BECOMES, Token.CHARLITERAL, Token.DOT, Token.EOT};
 		parser = new Parser(scanner);
 		clazz = parser.getClass();
 	}

@@ -8,7 +8,7 @@ public abstract class AST {
 	private SourcePosition position;
 	public RuntimeEntity entity;
 
-	public abstract Object visit(Visitor v, Object arg);
+	public abstract Object visit(Visitor visitor, Object arg);
 	
 	public AST (SourcePosition position) {
 		this.position = position;
