@@ -1,9 +1,19 @@
 package com.rickauer.macbeth.syntacticAnalyzer;
 
 import com.rickauer.macbeth.ErrorReporter;
+import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Command;
+import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.Expression;
+import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.Vname;
 
 // TODO: Refactor identifiers when class is complete
 
@@ -80,12 +90,90 @@ public class Parser {
 	}
 	
 	Command parseSingleCommand() throws SyntaxError {
+		Command commandAST = null;
 		
-		// TODO: Implement method
+		SourcePosition commandPosition = new SourcePosition();
+		start(commandPosition);
 		
-		return null;	// get rid of compiler warning until method is implemented
+		switch(currentToken.kind) {
+			case Token.IDENTIFIER -> {
+				Identifier identifierAST = parseIdentifier();
+				if(currentToken.kind == Token.LBRACKET) {
+					acceptIt();
+					ActualParameterSequence parameterSequenceAST = parseActualParameterSequence();
+					accept(Token.RBRACKET);
+					finish(commandPosition);
+					commandAST = new CallCommand(identifierAST, parameterSequenceAST, commandPosition);
+				} else {
+					Vname vnameAST = parseRestOfVname(identifierAST);
+					accept(Token.BECOMES);
+					Expression expressionAST = parseExpression();
+					finish(commandPosition);
+					commandAST = new AssignCommand(vnameAST, expressionAST, commandPosition);
+				}
+			}
+		}
 	}
-	// TODO: Implement remaining logic
 	
+	Identifier parseIdentifier() throws SyntaxError {
+		Identifier identifier;
+		
+		if(currentToken.kind == Token.IDENTIFIER) {
+			previousTokenPosition = currentToken.position;
+			String spelling = currentToken.spelling;
+			identifier = new Identifier(spelling, previousTokenPosition);
+			currentToken = lexeicalAnalyser.scanSourceCode();
+		} else {
+			identifier = null;
+			syntacticError("identifier expected here", "");
+		}
+		return identifier;
+	}
 	
+	ActualParameterSequence parseActualParameterSequence() throws SyntaxError {
+
+		ActualParameterSequence actualParameterSequenceAST;
+		SourcePosition actualPosition = new SourcePosition();
+		
+		start(actualPosition);
+		if(currentToken.kind == Token.RBRACKET) {
+			finish(actualPosition);
+			actualParameterSequenceAST = new EmptyActualParameterSequence(actualPosition);
+		} else {
+			actualParameterSequenceAST = parseProperActualParameterSequence();
+		}
+		return actualParameterSequenceAST;
+	}
+	
+	ActualParameterSequence parseProperActualParameterSequence() throws SyntaxError {
+		
+		ActualParameterSequence actualParameterSequenceAST = null;
+		SourcePosition actualPosition = new SourcePosition();
+		
+		start(actualPosition);
+		ActualParameter actualParameterAST = parseActualParameter();
+
+		// Extension point: In case you want to support more than one parameters, add if-else here and add class MultipleActualParameterSequence
+		finish(actualPosition);
+		actualParameterSequenceAST = new SingleActualParameterSequence(actualParameterAST, actualPosition);
+		
+		return actualParameterSequenceAST;
+	}
+	
+	ActualParameter parseActualParameter() throws SyntaxError {
+		
+		ActualParameter actualParameterAST = null;
+		SourcePosition actualPosition = new SourcePosition();
+		
+		start(actualPosition);
+		
+		switch(currentToken.kind) {
+			case Token.IDENTIFIER, Token.INTLITERAL, Token.CHARLITERAL, Token.OPERATOR, Token.LBRACKET, Token.RBRACKET -> {
+				Expression expressionAST = parseExpression();
+				finish(actualPosition);
+				actualParameterAST = new ConstantActualParameter(expressionAST, actualPosition);
+			}
+		}
+	}
+	// TODO: Implement parseExpression(), parseRestOfVname() as well as the remaining logic 
 }

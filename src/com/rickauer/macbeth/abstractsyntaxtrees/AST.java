@@ -10,7 +10,7 @@ public abstract class AST {
 
 	public abstract Object visit(Visitor visitor, Object arg);
 	
-	public AST (SourcePosition position) {
+	public AST(SourcePosition position) {
 		this.position = position;
 		entity = null;
 	}
