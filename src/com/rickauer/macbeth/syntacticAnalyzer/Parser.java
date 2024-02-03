@@ -4,12 +4,17 @@ import com.rickauer.macbeth.ErrorReporter;
 import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Command;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Expression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
+import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
+import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
@@ -80,6 +85,7 @@ public class Parser {
 		SourcePosition commandPosition = new SourcePosition();
 		start(commandPosition);
 		commandAST = parseSingleCommand();
+		
 		while(currentToken.kind == Token.DOT) {
 			acceptIt();
 			Command c2AST = parseSingleCommand();
@@ -112,7 +118,17 @@ public class Parser {
 					commandAST = new AssignCommand(vnameAST, expressionAST, commandPosition);
 				}
 			}
+			
+			case Token.DOT, Token.EOT -> {
+				finish(commandPosition);
+				commandAST = new EmptyCommand(commandPosition);
+			}
+			
+			default -> {
+				syntacticError("\"%\" cannot start a command", currentToken.spelling);
+			}
 		}
+		return commandAST;
 	}
 	
 	Identifier parseIdentifier() throws SyntaxError {
@@ -173,7 +189,65 @@ public class Parser {
 				finish(actualPosition);
 				actualParameterAST = new ConstantActualParameter(expressionAST, actualPosition);
 			}
+			
+			default -> {
+				syntacticError("\"%\" cannot start an acutal parameter", currentToken.spelling);
+			}
+		}
+		return actualParameterAST;
+	}
+	
+	Expression parseExpression() throws SyntaxError {
+		
+		// In case Macbeth is going to support if-else expressions or loops, add logic here within a switch statement
+		Expression expressionAST = parseSecondaryExpression();
+		
+		return expressionAST;
+	}
+	
+	Expression parseSecondaryExpression() throws SyntaxError {
+		
+		Expression expressionAST = null;
+		SourcePosition position = new SourcePosition();
+		start(position);
+		expressionAST = parsePrimaryExpression();
+		while(currentToken.kind == Token.OPERATOR) {
+			Operator operatorAST = parseOperator();
+			Expression expression2AST = parsePrimaryExpression();
+			expressionAST = new BinaryExpression(expressionAST, operatorAST, expression2AST, position);
+		}
+		return expressionAST;
+	}
+	
+	Expression parsePrimaryExpression() throws SyntaxError {
+		
+		Expression expressionAST = null;
+		SourcePosition position = new SourcePosition();
+		start(position);
+		
+		switch(currentToken.kind) {
+			case Token.INTLITERAL -> {
+				IntegerLiteral integerLiteralAST = parseIntegerLiteral();
+				finish(position);
+				expressionAST = new IntegerExpression(integerLiteralAST, position);
+			}
 		}
 	}
-	// TODO: Implement parseExpression(), parseRestOfVname() as well as the remaining logic 
+	
+	Operator parseOperator() throws SyntaxError {
+		
+		Operator operator = null;
+		
+		if(currentToken.kind == Token.OPERATOR) {
+			previousTokenPosition = currentToken.position;
+			operator = new Operator(currentToken.spelling, previousTokenPosition);
+			currentToken = lexeicalAnalyser.scanSourceCode();
+		} else {
+			operator = null;
+			syntacticError("operator expected here", "");
+		}
+		return operator;
+	}
+	
+	// TODO: Implement remaining logic 
 }

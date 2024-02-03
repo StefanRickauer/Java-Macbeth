@@ -1,10 +1,15 @@
 package com.rickauer.macbeth.semanticAnalyzer;
 
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
+import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
+import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
@@ -56,6 +61,36 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitEmptyCommand(EmptyCommand ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitIntegerExpression(IntegerExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitIntegerLiteral(IntegerLiteral ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitOperator(Operator ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitBinaryExpression(BinaryExpression ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
