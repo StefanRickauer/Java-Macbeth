@@ -6,6 +6,8 @@ import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.Command;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
@@ -231,7 +233,46 @@ public class Parser {
 				finish(position);
 				expressionAST = new IntegerExpression(integerLiteralAST, position);
 			}
+			
+			case Token.CHARLITERAL -> {
+				CharacterLiteral characterLiteralAST = parseCharacterLiteral();
+				finish(position);
+				expressionAST = new CharacterExpression(characterLiteralAST, position);
+			}
+			
+			case Token.IDENTIFIER -> {
+				Identifier identifierAST = parseIdentifier();
+				if(currentToken.kind == Token.LBRACKET) {
+					acceptIt();
+					ActualParameterSequence actualParameterSequenceAST = parseActualParameterSequence();
+					accept(Token.RBRACKET);
+					finish(position);
+					expressionAST = new CallExpression(identifierAST, actualParameterSequenceAST, position);
+				} else {
+					Vname vnameAST = parseRestOfVname(identifierAST);
+					finish(position);
+					expressionAST = new VnameExpression(vnameAST, position);
+				}
+			}
+			
+			case Token.OPERATOR -> {
+				Operator operatorAST = parseOperator();
+				Expression exprAST = parsePrimaryExpression();
+				finish(position);
+				expressionAST  new UnaryExpression(operatorAST, exprAST, position);
+			}
+			
+			case Token.LBRACKET -> {
+				acceptIt();
+				expressionAST = parseExpression();
+				accept(Token.RBRACKET);
+			}
+			
+			default -> {
+				syntacticError("\"%\" cannot start an expression", currentToken.spelling);
+			}
 		}
+		return expressionAST;
 	}
 	
 	Operator parseOperator() throws SyntaxError {
@@ -243,7 +284,6 @@ public class Parser {
 			operator = new Operator(currentToken.spelling, previousTokenPosition);
 			currentToken = lexeicalAnalyser.scanSourceCode();
 		} else {
-			operator = null;
 			syntacticError("operator expected here", "");
 		}
 		return operator;

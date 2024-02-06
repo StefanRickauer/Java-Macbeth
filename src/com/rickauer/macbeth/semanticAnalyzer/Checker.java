@@ -3,6 +3,7 @@ package com.rickauer.macbeth.semanticAnalyzer;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
@@ -91,6 +92,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitBinaryExpression(BinaryExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitCharacterExpression(CharacterExpression ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

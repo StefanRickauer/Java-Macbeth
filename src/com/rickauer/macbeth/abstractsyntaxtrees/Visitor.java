@@ -16,4 +16,6 @@ public interface Visitor {
 	public abstract Object visitIntegerLiteral(IntegerLiteral ast, Object object);
 	public abstract Object visitOperator(Operator ast, Object object);
 	public abstract Object visitBinaryExpression(BinaryExpression ast, Object object);
+	public abstract Object visitCharacterExpression(CharacterExpression ast, Object object);
+	public abstract Object visitCharacterLiteral(CharacterLiteral ast, Object object);
 }
