@@ -11,6 +11,7 @@ public class Operator extends Terminal {
 		declaration = null;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitOperator(this, object);
 	}

@@ -11,6 +11,7 @@ public class IntegerExpression extends Expression {
 		integerLiteral = integerLiteralAST;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitIntegerExpression(this, object);
 	}

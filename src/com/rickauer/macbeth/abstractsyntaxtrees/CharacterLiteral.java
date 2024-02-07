@@ -8,6 +8,7 @@ public class CharacterLiteral extends Terminal {
 		super(spelling, position);
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitCharacterLiteral(this, object);
 	}

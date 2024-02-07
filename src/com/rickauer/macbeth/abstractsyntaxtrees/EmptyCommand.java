@@ -8,6 +8,7 @@ public class EmptyCommand extends Command {
 		super(position);
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitEmptyCommand(this, object);
 	}

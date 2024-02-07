@@ -6,6 +6,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.ActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.CallExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.Command;

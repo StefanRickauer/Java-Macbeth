@@ -8,6 +8,7 @@ public class IntegerLiteral extends Terminal {
 		super(spelling, position);
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitIntegerLiteral(this, object);
 	}

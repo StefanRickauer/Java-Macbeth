@@ -11,6 +11,7 @@ public class CharacterExpression extends Expression {
 		characterLiteral = characterLiteralAST;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitCharacterExpression(this, object);
 	}

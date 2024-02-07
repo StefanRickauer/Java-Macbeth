@@ -11,6 +11,7 @@ public class SingleActualParameterSequence extends ActualParameterSequence {
 		actualParameter = actualParameterAST;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitSingleActualParameterSequence(this, object);
 	}

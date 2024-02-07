@@ -18,4 +18,5 @@ public interface Visitor {
 	public abstract Object visitBinaryExpression(BinaryExpression ast, Object object);
 	public abstract Object visitCharacterExpression(CharacterExpression ast, Object object);
 	public abstract Object visitCharacterLiteral(CharacterLiteral ast, Object object);
+	public abstract Object visitCallExpression(CallExpression ast, Object object);
 }

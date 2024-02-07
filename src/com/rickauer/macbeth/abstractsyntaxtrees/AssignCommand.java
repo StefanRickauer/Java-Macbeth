@@ -13,6 +13,7 @@ public class AssignCommand extends Command {
 		expression = expressionAST;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitAssignCommand(this, object);
 	}

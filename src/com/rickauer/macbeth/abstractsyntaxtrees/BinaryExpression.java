@@ -14,6 +14,7 @@ public class BinaryExpression extends Expression {
 		expressionTwo = expressionTwoAST;
 	}
 	
+	@Override
 	public Object visit(Visitor visitor, Object object) {
 		return visitor.visitBinaryExpression(this, object);
 	}
