@@ -3,7 +3,9 @@ package com.rickauer.macbeth.semanticAnalyzer;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CallCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.CallExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
@@ -13,8 +15,12 @@ import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
+import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
+import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
 
 public class Checker implements Visitor {
 
@@ -98,6 +104,42 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitCharacterExpression(CharacterExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitCharacterLiteral(CharacterLiteral ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitCallExpression(CallExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitUnaryExpression(UnaryExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitVnameExpression(VnameExpression ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitSimpleVname(SimpleVname ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitSubscriptVname(SubscriptVname ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

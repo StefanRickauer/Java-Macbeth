@@ -20,26 +20,30 @@ import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
+import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Vname;
+import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
 
 // TODO: Refactor identifiers when class is complete
 
 public class Parser {
-	private Scanner lexeicalAnalyser;
+	private Scanner lexicalAnalyser;
 	private ErrorReporter errorReporter;
 	private Token currentToken;
 	private SourcePosition previousTokenPosition;
 	
 	public Parser(Scanner lexer) {
-		this.lexeicalAnalyser = lexer;
+		this.lexicalAnalyser = lexer;
 		previousTokenPosition = new SourcePosition();
 	}
 	
 	void accept(int tokenExpected) throws SyntaxError {
 		if (currentToken.kind == tokenExpected) {
 			previousTokenPosition = currentToken.position;
-			currentToken = lexeicalAnalyser.scanSourceCode();
+			currentToken = lexicalAnalyser.scanSourceCode();
 		} else {
 			syntacticError("\"%\" expected here", Token.spell(tokenExpected));
 		}
@@ -47,7 +51,7 @@ public class Parser {
 	
 	void acceptIt() {
 		previousTokenPosition = currentToken.position;
-		currentToken = lexeicalAnalyser.scanSourceCode();
+		currentToken = lexicalAnalyser.scanSourceCode();
 	}
 	
 	void start(SourcePosition position) {
@@ -68,7 +72,7 @@ public class Parser {
 		
 		previousTokenPosition.start = 0;
 		previousTokenPosition.finish = 0;
-		currentToken = lexeicalAnalyser.scanSourceCode();
+		currentToken = lexicalAnalyser.scanSourceCode();
 		
 		try {
 			Command cAST = parseCommand();
@@ -141,7 +145,7 @@ public class Parser {
 			previousTokenPosition = currentToken.position;
 			String spelling = currentToken.spelling;
 			identifier = new Identifier(spelling, previousTokenPosition);
-			currentToken = lexeicalAnalyser.scanSourceCode();
+			currentToken = lexicalAnalyser.scanSourceCode();
 		} else {
 			identifier = null;
 			syntacticError("identifier expected here", "");
@@ -260,7 +264,7 @@ public class Parser {
 				Operator operatorAST = parseOperator();
 				Expression exprAST = parsePrimaryExpression();
 				finish(position);
-				expressionAST  new UnaryExpression(operatorAST, exprAST, position);
+				expressionAST = new UnaryExpression(operatorAST, exprAST, position);
 			}
 			
 			case Token.LBRACKET -> {
@@ -283,12 +287,57 @@ public class Parser {
 		if(currentToken.kind == Token.OPERATOR) {
 			previousTokenPosition = currentToken.position;
 			operator = new Operator(currentToken.spelling, previousTokenPosition);
-			currentToken = lexeicalAnalyser.scanSourceCode();
+			currentToken = lexicalAnalyser.scanSourceCode();
 		} else {
 			syntacticError("operator expected here", "");
 		}
 		return operator;
 	}
 	
+	CharacterLiteral parseCharacterLiteral() throws SyntaxError {
+		
+		CharacterLiteral characterLiteral = null;
+		
+		if(currentToken.kind == Token.CHARLITERAL) {
+			previousTokenPosition = currentToken.position;
+			String spelling = currentToken.spelling;
+			characterLiteral = new CharacterLiteral(spelling, previousTokenPosition);
+			currentToken = lexicalAnalyser.scanSourceCode();
+		} else {
+			syntacticError("character literal expected here", "");
+		}
+		return characterLiteral;
+	}
+	
+	IntegerLiteral parseIntegerLiteral() throws SyntaxError {
+		
+		IntegerLiteral integerLiteral = null;
+		
+		if(currentToken.kind == Token.INTLITERAL) {
+			previousTokenPosition = currentToken.position;
+			String spelling = currentToken.spelling;
+			integerLiteral = new IntegerLiteral(spelling, previousTokenPosition);
+			currentToken = lexicalAnalyser.scanSourceCode();
+		} else {
+			syntacticError("integer literal expected here", "");
+		}
+		return integerLiteral;
+	}
+	
+	Vname parseRestOfVname(Identifier identifierAST) throws SyntaxError {
+		
+		SourcePosition vnamePosition = new SourcePosition();
+		vnamePosition = identifierAST.getPosition();
+		Vname vnameAST = new SimpleVname(identifierAST, vnamePosition);
+		
+		while(currentToken.kind == Token.LBRACKET) {
+			acceptIt();
+			Expression expressionAST = parseExpression();
+			accept(Token.RBRACKET);
+			finish(vnamePosition);
+			vnameAST = new SubscriptVname(vnameAST, expressionAST, vnamePosition);
+		}
+		return vnameAST;
+	}
 	// TODO: Implement remaining logic 
 }

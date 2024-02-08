@@ -19,4 +19,8 @@ public interface Visitor {
 	public abstract Object visitCharacterExpression(CharacterExpression ast, Object object);
 	public abstract Object visitCharacterLiteral(CharacterLiteral ast, Object object);
 	public abstract Object visitCallExpression(CallExpression ast, Object object);
+	public abstract Object visitUnaryExpression(UnaryExpression ast, Object object);
+	public abstract Object visitVnameExpression(VnameExpression ast, Object object);
+	public abstract Object visitSimpleVname(SimpleVname ast, Object object);
+	public abstract Object visitSubscriptVname(SubscriptVname ast, Object object);
 }
