@@ -1,0 +1,3 @@
+number myNumber <- 5.
+number myNextNumber <- 1 + 1.
+string myString <- 'c'.

@@ -5,7 +5,7 @@ import com.rickauer.macbeth.syntacticAnalyzer.SourcePosition;
 public class ErrorReporter {
 	int numberOfErrors;
 	
-	ErrorReporter() {
+	public ErrorReporter() {
 		numberOfErrors = 0;
 	}
 	
@@ -14,9 +14,9 @@ public class ErrorReporter {
 		
 		for (int i = 0; i < message.length(); i++) {
 			if (message.charAt(i) == '%') {
-				System.out.println(tokenName);
+				System.out.print(tokenName);
 			} else {
-				System.out.println(message.charAt(i));
+				System.out.print(message.charAt(i));
 			}
 		}
 		System.out.println(" " + position.start + ".." + position.finish );

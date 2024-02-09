@@ -11,17 +11,20 @@ import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.Command;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.Declaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Expression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
+import com.rickauer.macbeth.abstractsyntaxtrees.NumberDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Vname;
@@ -37,6 +40,7 @@ public class Parser {
 	
 	public Parser(Scanner lexer) {
 		this.lexicalAnalyser = lexer;
+		errorReporter = new ErrorReporter();
 		previousTokenPosition = new SourcePosition();
 	}
 	
@@ -124,6 +128,16 @@ public class Parser {
 					finish(commandPosition);
 					commandAST = new AssignCommand(vnameAST, expressionAST, commandPosition);
 				}
+			}
+			
+			case Token.NUMBER, Token.STRING -> {
+				acceptIt();
+				Identifier identifierAST = parseIdentifier();
+				Vname vnameAST = parseRestOfVname(identifierAST);
+				accept(Token.BECOMES);
+				Expression expressionAST = parseExpression();
+				finish(commandPosition);
+				commandAST = new AssignCommand(vnameAST, expressionAST, commandPosition);
 			}
 			
 			case Token.DOT, Token.EOT -> {
@@ -338,6 +352,36 @@ public class Parser {
 			vnameAST = new SubscriptVname(vnameAST, expressionAST, vnamePosition);
 		}
 		return vnameAST;
+	}
+	
+	Declaration parseSingleDeclaration() throws SyntaxError	{
+		Declaration declarationAST = null;
+		
+		SourcePosition position = new SourcePosition();
+		start(position);
+		
+		switch (currentToken.kind) {
+			case Token.NUMBER -> {
+				acceptIt();
+				Identifier identifierAST = parseIdentifier();
+				accept(Token.BECOMES);
+				finish(position);
+				declarationAST = new NumberDeclaration(identifierAST, position);
+			}
+			
+			case Token.STRING -> {
+				acceptIt();
+				Identifier identifierAST = parseIdentifier();
+				accept(Token.BECOMES);
+				finish(position);
+				declarationAST = new StringDeclaration(identifierAST, position);
+			}
+			
+			default -> {
+				syntacticError("\"%\" cannot start a declaration", currentToken.spelling);
+			}
+		}
+		return declarationAST;
 	}
 	// TODO: Implement remaining logic 
 }

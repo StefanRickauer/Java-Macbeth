@@ -23,4 +23,6 @@ public interface Visitor {
 	public abstract Object visitVnameExpression(VnameExpression ast, Object object);
 	public abstract Object visitSimpleVname(SimpleVname ast, Object object);
 	public abstract Object visitSubscriptVname(SubscriptVname ast, Object object);
+	public abstract Object visitNumberDeclaration(NumberDeclaration ast, Object object);
+	public abstract Object visitStringDeclaration(StringDeclaration ast, Object object);
 }

@@ -12,11 +12,13 @@ import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
+import com.rickauer.macbeth.abstractsyntaxtrees.NumberDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
@@ -140,6 +142,18 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitSubscriptVname(SubscriptVname ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitNumberDeclaration(NumberDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitStringDeclaration(StringDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
