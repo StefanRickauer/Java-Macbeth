@@ -16,7 +16,7 @@ public class IntegrationTestMain {
 		try {
 			System.out.println("Starting integration test...");
 			program = parser.parseProgram();
-			System.out.println(program.command);
+			System.out.println(program.command.getClass());
 			System.out.println("Finished integration test.");
 		} catch (Exception e) {
 			e.printStackTrace();
