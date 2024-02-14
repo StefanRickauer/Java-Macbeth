@@ -38,9 +38,14 @@ public class Parser {
 	private Token currentToken;
 	private SourcePosition previousTokenPosition;
 	
+	
 	public Parser(Scanner lexer) {
+		this(lexer, new ErrorReporter());
+	}
+	
+	public Parser(Scanner lexer, ErrorReporter reporter) {
 		this.lexicalAnalyser = lexer;
-		errorReporter = new ErrorReporter();
+		this.errorReporter = reporter;
 		previousTokenPosition = new SourcePosition();
 	}
 	

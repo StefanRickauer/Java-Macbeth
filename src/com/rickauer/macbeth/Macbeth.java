@@ -4,6 +4,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.semanticAnalyzer.Checker;
 import com.rickauer.macbeth.syntacticAnalyzer.Parser;
 import com.rickauer.macbeth.syntacticAnalyzer.Scanner;
+import com.rickauer.macbeth.syntacticAnalyzer.SourceFile;
 
 public class Macbeth {
 	
@@ -28,19 +29,53 @@ public class Macbeth {
 		boolean compiledSuccessfully;
 		
 		try {
-			compileProgram(sourceFile, objectName, false, false);
+			compiledSuccessfully = compileProgram(sourceFile, objectName, false, false);
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 		}
 	}
 	
-	private static boolean compileProgram(String source, String object, boolean showAST, boolean showTable) {
+	private static boolean compileProgram(String sourceName, String object, boolean showAST, boolean showTable) {
 		System.out.println("Macbeth Compiler - Version: 0.2\n" +
 				"===============================\n\n" +
 				"There's no art\n"
 				+ "To find the mind's construction in the face.");
+		System.out.println("Starting Syntax Analysis ...");
 		
-		// TODO: Implement remaining logic
+		SourceFile sourceFile = new SourceFile(sourceName);
+		
+		if(sourceFile == null) {
+			System.err.println("Can't open source file: " + sourceName);
+			System.exit(1);
+		}
+		
+		scanner = new Scanner(sourceFile);
+		errorReporter = new ErrorReporter();
+		parser = new Parser(scanner, errorReporter);
+		checker = new Checker(errorReporter);
+		encoder = new Encoder(errorReporter);
+		
+		programAST = parser.parseProgram();
+		
+		if(errorReporter.numberOfErrors == 0) {
+			System.out.println("Starting Context Analysis ...");
+			checker.check(programAST);
+			
+			if (errorReporter.numberOfErrors == 0) {
+				encoder.encodeRun(programAST, showTable);
+			}
+		}
+		
+		boolean successful = (errorReporter.numberOfErrors == 0);
+		
+		if (successful) {
+			encoder.saveObjectProgram(objectName);
+			System.out.println("Successfully compiled " + sourceName);
+		} else {
+			System.err.println("Failed compiling " + sourceName);
+		}
+		
+		return successful;
 	}
 }
