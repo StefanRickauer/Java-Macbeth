@@ -1,4 +1,4 @@
-package com.rickauer.macbeth.semanticAnalyzer;
+package com.rickauer.macbeth.codegenerator;
 
 import com.rickauer.macbeth.ErrorReporter;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
@@ -26,28 +26,17 @@ import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
 import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
-import com.rickauer.macbeth.syntacticAnalyzer.SourcePosition;
 
-public class Checker implements Visitor {
-	
-	private SymbolTable symbolTable;
-	private static SourcePosition dummyPosition = new SourcePosition();
+public final class Encoder implements Visitor {
+
 	private ErrorReporter reporter;
 	
-	public Checker(ErrorReporter reporter) {
+	public Encoder(ErrorReporter reporter) {
 		this.reporter = reporter;
-		this.symbolTable = new SymbolTable();
-		establishStandardEnvironment();
+		nextInstrAddr = Machine.CB;
+		elaborateStandardEnvironment();
 	}
 	
-	private void establishStandardEnvironment() {
-		// TODO: Implement Method
-	}
-	
-	public void check(Program ast) {
-		ast.visit(this, null);
-	}
-
 	@Override
 	public Object visitProgram(Program ast, Object object) {
 		// TODO Auto-generated method stub
@@ -79,12 +68,6 @@ public class Checker implements Visitor {
 	}
 
 	@Override
-	public Object visitConstantActualParameter(ConstantActualParameter ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Object visitEmptyActualParameterSequence(EmptyActualParameterSequence ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
@@ -92,6 +75,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitConstantActualParameter(ConstantActualParameter ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -179,6 +168,11 @@ public class Checker implements Visitor {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private final void elaborateStandardEnvironment() {
+		// TODO: Implement Method
+	}
+	// TODO: Implement remaining class
 
 	@Override
 	public Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object object) {
@@ -191,6 +185,4 @@ public class Checker implements Visitor {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	// TODO implement remaining logic
 }

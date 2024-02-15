@@ -25,4 +25,6 @@ public interface Visitor {
 	public abstract Object visitSubscriptVname(SubscriptVname ast, Object object);
 	public abstract Object visitNumberDeclaration(NumberDeclaration ast, Object object);
 	public abstract Object visitStringDeclaration(StringDeclaration ast, Object object);
+	public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object object);
+	public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object object);
 }

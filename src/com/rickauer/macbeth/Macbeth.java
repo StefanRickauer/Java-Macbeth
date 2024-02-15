@@ -1,6 +1,7 @@
 package com.rickauer.macbeth;
 
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
+import com.rickauer.macbeth.codegenerator.Encoder;
 import com.rickauer.macbeth.semanticAnalyzer.Checker;
 import com.rickauer.macbeth.syntacticAnalyzer.Parser;
 import com.rickauer.macbeth.syntacticAnalyzer.Scanner;
@@ -13,7 +14,7 @@ public class Macbeth {
 	private static Scanner scanner;
 	private static Parser parser;
 	private static Checker checker;
-//	private static Encoder encoder;
+	private static Encoder encoder;
 	private static ErrorReporter errorReporter;
 	
 	private static Program programAST;
