@@ -1,5 +1,10 @@
 package com.rickauer.macbeth.codegenerator;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.rickauer.macbeth.ErrorReporter;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
@@ -30,17 +35,48 @@ import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
 public final class Encoder implements Visitor {
 
 	private ErrorReporter reporter;
+	private int nextInstructionAddress;
 	
 	public Encoder(ErrorReporter reporter) {
 		this.reporter = reporter;
-		nextInstrAddr = Machine.CB;
+		nextInstructionAddress = Machine.CB;
 		elaborateStandardEnvironment();
+	}
+	
+	public final void encodeRun(Program programAST, boolean showingTable) {
+		programAST.visit(this, new Frame(0, 0));
+		emit(Machine.HALTop, 0, 0, 0);
+	}
+	
+	private void emit(int opCode, int length, int registerNumber, int operand) {
+		
+		Instruction nextInstruction = new Instruction();
+		
+		if (length > 255) {
+			reporter.reportRestriction("Length of operand can't exceed 255 words.");
+			length = 255;
+		}
+		
+		nextInstruction.opCode = opCode;
+		nextInstruction.length = length;
+		nextInstruction.registerNumber = registerNumber;
+		nextInstruction.operand = operand;
+		
+		if (nextInstructionAddress == Machine.PB) {
+			reporter.reportRestriction("Too many instructions for code segment");
+		} else {
+			Machine.code[nextInstructionAddress] = nextInstruction;
+			nextInstructionAddress++;
+		}
+	}
+	
+	private void patch(int address, int operand) {
+		Machine.code[address].operand = operand;
 	}
 	
 	@Override
 	public Object visitProgram(Program ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		return ast.visit(this, object);
 	}
 
 	@Override
@@ -184,5 +220,28 @@ public final class Encoder implements Visitor {
 	public Object visitTypeDeclaration(TypeDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void saveObjectProgram(String objectName) {
+		FileOutputStream objectFile = null;
+		DataOutputStream objectStream = null;
+		
+		int address;
+		
+		try {
+			objectFile = new FileOutputStream(objectName);
+			objectStream = new DataOutputStream(objectFile);
+			
+			address = Machine.CB;
+			for (address = Machine.CB; address < nextInstructionAddress; address++) {
+				Machine.code[address].write(objectStream);
+			}
+			objectFile.close();
+			objectStream.close();
+		} catch (FileNotFoundException e) {
+			System.err.println("Error opening object file: " + e);
+		} catch (IOException e) {
+			System.err.println("Error writing object file: " + e);
+		}
 	}
 }
