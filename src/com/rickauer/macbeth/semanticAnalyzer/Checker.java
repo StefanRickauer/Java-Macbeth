@@ -9,6 +9,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.CallExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.Declaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
@@ -22,6 +23,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
+import com.rickauer.macbeth.abstractsyntaxtrees.Terminal;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
@@ -47,23 +49,30 @@ public class Checker implements Visitor {
 	public void check(Program ast) {
 		ast.visit(this, null);
 	}
+	
+	private void reportUndelcared(Terminal leaf) {
+		reporter.reportError("\"%\" is not declared", leaf.spelling, leaf.getPosition());
+	}
 
 	@Override
 	public Object visitProgram(Program ast, Object object) {
-		// TODO Auto-generated method stub
+		ast.command.visit(this, null);
 		return null;
 	}
 
 	@Override
 	public Object visitSequentialCommand(SequentialCommand ast, Object object) {
-		// TODO Auto-generated method stub
+		ast.commandOne.visit(this, null);
+		ast.commandTwo.visit(this, null);
 		return null;
 	}
 
 	@Override
 	public Object visitIdentifier(Identifier ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		Declaration binding = symbolTable.retrieve(ast.spelling);
+		if (binding != null)
+			ast.declaration = binding;
+		return binding;
 	}
 
 	@Override
