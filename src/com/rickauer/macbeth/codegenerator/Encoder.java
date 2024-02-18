@@ -21,6 +21,8 @@ import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.NumberDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
+import com.rickauer.macbeth.abstractsyntaxtrees.ProcDeclaration;
+import com.rickauer.macbeth.abstractsyntaxtrees.ProcFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
@@ -243,5 +245,17 @@ public final class Encoder implements Visitor {
 		} catch (IOException e) {
 			System.err.println("Error writing object file: " + e);
 		}
+	}
+
+	@Override
+	public Object visitProcDeclaration(ProcDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitProcFormalParameter(ProcFormalParameter ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

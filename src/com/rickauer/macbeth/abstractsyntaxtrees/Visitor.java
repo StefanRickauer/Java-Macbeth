@@ -27,4 +27,6 @@ public interface Visitor {
 	public abstract Object visitStringDeclaration(StringDeclaration ast, Object object);
 	public abstract Object visitBinaryOperatorDeclaration(BinaryOperatorDeclaration ast, Object object);
 	public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object object);
+	public abstract Object visitProcDeclaration(ProcDeclaration ast, Object object);
+	public abstract Object visitProcFormalParameter(ProcFormalParameter ast, Object object);
 }

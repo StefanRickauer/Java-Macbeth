@@ -17,6 +17,8 @@ import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.NumberDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Operator;
+import com.rickauer.macbeth.abstractsyntaxtrees.ProcDeclaration;
+import com.rickauer.macbeth.abstractsyntaxtrees.ProcFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
@@ -50,7 +52,7 @@ public class Checker implements Visitor {
 		ast.visit(this, null);
 	}
 	
-	private void reportUndelcared(Terminal leaf) {
+	private void reportUndeclared(Terminal leaf) {
 		reporter.reportError("\"%\" is not declared", leaf.spelling, leaf.getPosition());
 	}
 
@@ -77,7 +79,17 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitCallCommand(CallCommand ast, Object object) {
-		// TODO Auto-generated method stub
+		
+		Declaration binding = (Declaration) ast.identifier.visit(this, null);
+		if (binding == null) 
+			reportUndeclared(ast.identifier);
+		else if (binding instanceof ProcDeclaration) {
+			ast.actualParameterSequence.visit(this, ((ProcDeclaration) binding).formalParameterSequence);
+		} else if (binding instanceof ProcFormalParameter) {
+			ast.actualParameterSequence.visit(this, ((ProcFormalParameter) binding).formalParameterSequence);
+		} else 
+			reporter.reportError("\"%\" is not a procedure identifier", ast.identifier.spelling, ast.identifier.getPosition());
+		
 		return null;
 	}
 
@@ -197,6 +209,18 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitTypeDeclaration(TypeDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitProcDeclaration(ProcDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitProcFormalParameter(ProcFormalParameter ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
