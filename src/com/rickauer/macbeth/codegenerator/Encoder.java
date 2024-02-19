@@ -14,6 +14,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.CallExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.ConstantFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
@@ -255,6 +256,12 @@ public final class Encoder implements Visitor {
 
 	@Override
 	public Object visitProcFormalParameter(ProcFormalParameter ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

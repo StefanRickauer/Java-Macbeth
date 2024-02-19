@@ -29,4 +29,5 @@ public interface Visitor {
 	public abstract Object visitTypeDeclaration(TypeDeclaration ast, Object object);
 	public abstract Object visitProcDeclaration(ProcDeclaration ast, Object object);
 	public abstract Object visitProcFormalParameter(ProcFormalParameter ast, Object object);
+	public abstract Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object);
 }

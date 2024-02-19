@@ -9,9 +9,11 @@ import com.rickauer.macbeth.abstractsyntaxtrees.CallExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.CharacterLiteral;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.ConstantFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.Declaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.FormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
@@ -27,6 +29,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.Terminal;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
+import com.rickauer.macbeth.abstractsyntaxtrees.TypeDenoter;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
 import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
@@ -95,13 +98,26 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitAssignCommand(AssignCommand ast, Object object) {
-		// TODO Auto-generated method stub
+		TypeDenoter vType = (TypeDenoter) ast.vname.visit(this, null);
+		TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
+		if (!ast.vname.variable)
+			reporter.reportError("LHS of assignment is not a variable", "", ast.vname.getPosition());
+		if (!eType.equals(vType))
+			reporter.reportError("Assignment incompatiblity", "", ast.getPosition());
 		return null;
 	}
 
 	@Override
 	public Object visitConstantActualParameter(ConstantActualParameter ast, Object object) {
-		// TODO Auto-generated method stub
+		FormalParameter formalParameter = (FormalParameter) object;
+		TypeDenoter eType = (TypeDenoter) ast.expression.visit(this, null);
+		
+		if ( !(formalParameter instanceof ConstantFormalParameter))
+			reporter.reportError("Constant actual parameter not expected here", "", ast.getPosition());
+		else if ( !(eType.equals(((ConstantFormalParameter) formalParameter).typeDenoter)))
+			reporter.reportError("Wrong type for const actual parameter", "", ast.expression.getPosition());
+				
+		
 		return null;
 	}
 
@@ -221,6 +237,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitProcFormalParameter(ProcFormalParameter ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
