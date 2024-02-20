@@ -17,6 +17,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.ConstantActualParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.ConstantFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.EmptyFormalParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
@@ -262,6 +263,12 @@ public final class Encoder implements Visitor {
 
 	@Override
 	public Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

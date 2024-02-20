@@ -13,7 +13,9 @@ import com.rickauer.macbeth.abstractsyntaxtrees.ConstantFormalParameter;
 import com.rickauer.macbeth.abstractsyntaxtrees.Declaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyActualParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.EmptyCommand;
+import com.rickauer.macbeth.abstractsyntaxtrees.EmptyFormalParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.FormalParameter;
+import com.rickauer.macbeth.abstractsyntaxtrees.FormalParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.Identifier;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.IntegerLiteral;
@@ -123,7 +125,9 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitEmptyActualParameterSequence(EmptyActualParameterSequence ast, Object object) {
-		// TODO Auto-generated method stub
+		FormalParameterSequence formalParameterSequence = (FormalParameterSequence) object;
+		if (! (formalParameterSequence instanceof EmptyFormalParameterSequence))
+			reporter.reportError("Too few parameters", "", ast.getPosition());
 		return null;
 	}
 
@@ -243,6 +247,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
