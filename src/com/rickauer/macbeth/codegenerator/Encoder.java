@@ -29,6 +29,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.SingleFormalParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
@@ -269,6 +270,12 @@ public final class Encoder implements Visitor {
 
 	@Override
 	public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

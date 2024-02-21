@@ -27,6 +27,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.Program;
 import com.rickauer.macbeth.abstractsyntaxtrees.SequentialCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.SimpleVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.SingleActualParameterSequence;
+import com.rickauer.macbeth.abstractsyntaxtrees.SingleFormalParameterSequence;
 import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.Terminal;
@@ -133,7 +134,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitSingleActualParameterSequence(SingleActualParameterSequence ast, Object object) {
-		// TODO Auto-generated method stub
+		FormalParameterSequence formalParameterSequence = (FormalParameterSequence) object;
+		if (! (formalParameterSequence instanceof SingleFormalParameterSequence))
+			reporter.reportError("Incorrect number of actual parameters", "", ast.getPosition());
+		else
+			ast.actualParameter.visit(this, ((SingleFormalParameterSequence) formalParameterSequence).formalParameter);
+		
 		return null;
 	}
 
@@ -253,6 +259,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

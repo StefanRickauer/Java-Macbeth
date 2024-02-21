@@ -31,4 +31,5 @@ public interface Visitor {
 	public abstract Object visitProcFormalParameter(ProcFormalParameter ast, Object object);
 	public abstract Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object);
 	public abstract Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object);
+	public abstract Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object);
 }
