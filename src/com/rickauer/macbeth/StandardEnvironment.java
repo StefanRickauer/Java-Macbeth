@@ -6,7 +6,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.TypeDenoter;
 
 public final class StandardEnvironment {
 	
-	public static TypeDenoter charType, numberType, errorType;
+	public static TypeDenoter charType, numberType, anyType, errorType;
 	public static TypeDeclaration charDeclaration, numberDecaration;
 	public static BinaryOperatorDeclaration multiplyDeclaration, addDeclaration;
 	// TODO: Add remaining logic

@@ -1,6 +1,7 @@
 package com.rickauer.macbeth.semanticAnalyzer;
 
 import com.rickauer.macbeth.ErrorReporter;
+import com.rickauer.macbeth.StandardEnvironment;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryOperatorDeclaration;
@@ -145,32 +146,55 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitEmptyCommand(EmptyCommand ast, Object object) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object visitIntegerExpression(IntegerExpression ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		ast.typeDenoter = StandardEnvironment.numberType;
+		return ast.typeDenoter;
 	}
 
 	@Override
 	public Object visitIntegerLiteral(IntegerLiteral ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		return StandardEnvironment.numberType;
 	}
 
 	@Override
-	public Object visitOperator(Operator ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object visitOperator(Operator operator, Object object) {
+		Declaration binding = symbolTable.retrieve(operator.spelling);
+		if (binding != null) 
+			operator.declaration = binding;
+		return binding;
 	}
 
 	@Override
 	public Object visitBinaryExpression(BinaryExpression ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		TypeDenoter expressionOneType = (TypeDenoter) ast.expressionOne.visit(this, null);
+		TypeDenoter expressionTwoType = (TypeDenoter) ast.expressionTwo.visit(this, null);
+		Declaration binding = (Declaration) ast.operator.visit(this, null);
+		
+		if (binding == null)
+			reporter.reportError("\"%\" is not binary operator", ast.operator.spelling, ast.operator.getPosition());
+		else {
+			if (! (binding instanceof BinaryOperatorDeclaration))
+				reporter.reportError("\"%\" is not a binary operator", ast.operator.spelling, ast.operator.getPosition());
+			
+			BinaryOperatorDeclaration binaryOpBinding = (BinaryOperatorDeclaration) binding;
+			
+			if (binaryOpBinding.argumentOne == StandardEnvironment.anyType) {
+				if (!expressionOneType.equals(expressionTwoType))
+					reporter.reportError("Incompatible argument types for \"%\"", ast.operator.spelling, ast.getPosition());
+				else if (!expressionOneType.equals(binaryOpBinding.argumentOne))
+					reporter.reportError("Wrong argument type for \"%\"", ast.operator.spelling, ast.expressionOne.getPosition());
+				else if (!expressionTwoType.equals(binaryOpBinding.argumentTwo))
+					reporter.reportError("Wrong argument type for \"%\"", ast.operator.spelling, ast.expressionTwo.getPosition());
+				
+				ast.typeDenoter = binaryOpBinding.result;
+			}
+		}
+		return ast.typeDenoter;
 	}
 
 	@Override
