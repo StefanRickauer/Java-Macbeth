@@ -199,14 +199,13 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitCharacterExpression(CharacterExpression ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		ast.typeDenoter = StandardEnvironment.charType;
+		return ast.typeDenoter;
 	}
 
 	@Override
 	public Object visitCharacterLiteral(CharacterLiteral ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		return StandardEnvironment.charType;
 	}
 
 	@Override
