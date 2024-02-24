@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import com.rickauer.macbeth.ErrorReporter;
+import com.rickauer.macbeth.UnaryOperatorDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryOperatorDeclaration;
@@ -276,6 +277,12 @@ public final class Encoder implements Visitor {
 
 	@Override
 	public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

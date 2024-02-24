@@ -1,5 +1,7 @@
 package com.rickauer.macbeth.abstractsyntaxtrees;
 
+import com.rickauer.macbeth.UnaryOperatorDeclaration;
+
 public interface Visitor {
 	// TODO: Implement remaining logic
 	
@@ -32,4 +34,5 @@ public interface Visitor {
 	public abstract Object visitConstantFormalParameter(ConstantFormalParameter ast, Object object);
 	public abstract Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object);
 	public abstract Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object);
+	public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object);
 }

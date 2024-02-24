@@ -2,6 +2,7 @@ package com.rickauer.macbeth.semanticAnalyzer;
 
 import com.rickauer.macbeth.ErrorReporter;
 import com.rickauer.macbeth.StandardEnvironment;
+import com.rickauer.macbeth.UnaryOperatorDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.AssignCommand;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryExpression;
 import com.rickauer.macbeth.abstractsyntaxtrees.BinaryOperatorDeclaration;
@@ -210,14 +211,28 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitCallExpression(CallExpression ast, Object object) {
-		// TODO Auto-generated method stub
+		// TODO: Implement method
 		return null;
 	}
 
 	@Override
 	public Object visitUnaryExpression(UnaryExpression ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		TypeDenoter expressionType = (TypeDenoter) ast.expression.visit(this, null);
+		Declaration binding = (Declaration) ast.operator.visit(this, null);
+		
+		if (binding == null) {
+			reportUndeclared(ast.operator);
+			ast.typeDenoter = StandardEnvironment.errorType;
+		} else if ( ! (binding instanceof UnaryOperatorDeclaration))
+			reporter.reportError("\"%\" is not a unary operator", ast.operator.spelling, ast.operator.getPosition());
+		else {
+			UnaryOperatorDeclaration unaryBinding = (UnaryOperatorDeclaration) binding;
+			if (! expressionType.equals(unaryBinding.argument)) {
+				reporter.reportError("Wrong argument type for \"%\"", ast.operator.spelling, ast.operator.getPosition());
+			}
+			ast.typeDenoter = unaryBinding.result;
+		}
+		return ast.typeDenoter;
 	}
 
 	@Override
@@ -288,6 +303,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
