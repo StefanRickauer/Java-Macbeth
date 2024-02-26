@@ -36,6 +36,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.Terminal;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDenoter;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.VariableDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
 import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
 import com.rickauer.macbeth.syntacticAnalyzer.SourcePosition;
@@ -237,14 +238,25 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitVnameExpression(VnameExpression ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		ast.typeDenoter = (TypeDenoter) ast.vname.visit(this, null);
+		return ast.typeDenoter;
 	}
 
 	@Override
 	public Object visitSimpleVname(SimpleVname ast, Object object) {
-		// TODO Auto-generated method stub
-		return null;
+		ast.variable = false;
+		ast.typeDenoter = StandardEnvironment.errorType;
+		Declaration binding = (Declaration) ast.identifier.visit(this, null);
+		
+		if (binding == null)
+			reportUndeclared(ast.identifier);
+		else 		// no constants and no formal parameters
+			if (binding instanceof VariableDeclaration) {
+				ast.typeDenoter = ((VariableDeclaration) binding).typeDenoter;
+				ast.variable = true;
+			} else
+				reporter.reportError("\"%\" is not a variable identifier", ast.identifier.spelling, ast.identifier.getPosition());
+		return ast.typeDenoter;
 	}
 
 	@Override
@@ -309,6 +321,12 @@ public class Checker implements Visitor {
 
 	@Override
 	public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitVariableDeclaration(VariableDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

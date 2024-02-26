@@ -35,6 +35,7 @@ import com.rickauer.macbeth.abstractsyntaxtrees.StringDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.SubscriptVname;
 import com.rickauer.macbeth.abstractsyntaxtrees.TypeDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.UnaryExpression;
+import com.rickauer.macbeth.abstractsyntaxtrees.VariableDeclaration;
 import com.rickauer.macbeth.abstractsyntaxtrees.Visitor;
 import com.rickauer.macbeth.abstractsyntaxtrees.VnameExpression;
 
@@ -283,6 +284,12 @@ public final class Encoder implements Visitor {
 
 	@Override
 	public Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object visitVariableDeclaration(VariableDeclaration ast, Object object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -35,4 +35,5 @@ public interface Visitor {
 	public abstract Object visitEmptyFormalParameterSequence(EmptyFormalParameterSequence ast, Object object);
 	public abstract Object visitSingleFormalParameterSequence(SingleFormalParameterSequence ast, Object object);
 	public abstract Object visitUnaryOperatorDeclaration(UnaryOperatorDeclaration ast, Object object);
+	public abstract Object visitVariableDeclaration(VariableDeclaration ast, Object object);
 }
